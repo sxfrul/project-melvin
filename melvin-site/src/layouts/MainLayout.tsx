@@ -40,7 +40,7 @@ const MainLayout = () => {
             <span>Chat with Melvin</span>
           </NavLink>
           
-          <NavLink to="/growth-tracker" className={navLinkClasses}>
+          <NavLink to="/field-manager" className={navLinkClasses}>
             <Sprout size={18} />
             <span>Field Manager</span>
           </NavLink>
