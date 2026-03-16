@@ -72,7 +72,7 @@ export default function Dashboard() {
       </div>
 
       {/* Actionable Metrics Cards */}
-      <div className="grid grid-rows-2 grid-flow-col auto-cols-[85%] sm:auto-cols-[45%] lg:auto-cols-auto lg:grid-rows-1 lg:grid-flow-row lg:grid-cols-4 gap-3 lg:gap-2 overflow-x-auto snap-x snap-mandatory pb-2 lg:pb-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none'] mb-4 lg:mb-6">
+      <div className="grid grid-rows-2 grid-flow-col auto-cols-[85%] sm:auto-cols-[45%] lg:auto-cols-auto lg:grid-rows-1 lg:grid-flow-row lg:grid-cols-4 gap-3 lg:gap-2 overflow-x-auto snap-x snap-mandatory pb-2 lg:pb-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none'] mb-4 lg:mb-3">
         
         {/* Metric 1 */}
         <div className="snap-center rounded-2xl border border-gray-200/60 bg-white shadow-sm hover:shadow-md transition-shadow p-4 lg:p-5 flex flex-col justify-between">
