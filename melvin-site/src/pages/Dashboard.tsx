@@ -314,7 +314,7 @@ export default function Dashboard() {
             <div>
               <div className="flex justify-between text-sm mb-1">
                 <span className="font-medium text-gray-700">Total Affected Area</span>
-                <span className="font-bold text-red-600">28.4%</span>
+                <span className="font-bold text-gray-600">28.4%</span>
               </div>
               <div className="w-full bg-gray-200 rounded-full h-2">
                 <div className="bg-red-500 h-2 rounded-full" style={{ width: '28.4%' }}></div>
