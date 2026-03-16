@@ -1,6 +1,7 @@
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, BarChart, Bar } from "recharts";
 import { AlertTriangle, Droplets, Scan, Wind, Activity, TrendingDown, MapPin, Layers } from "lucide-react";
 
+
 // --- Mock Data ---
 
 const yieldData = [
@@ -72,7 +73,7 @@ export default function Dashboard() {
       </div>
 
       {/* Actionable Metrics Cards */}
-      <div className="grid grid-rows-2 grid-flow-col auto-cols-[85%] sm:auto-cols-[45%] md:flex md:flex-row xl:grid xl:grid-rows-1 xl:grid-cols-4 gap-3 lg:gap-4 xl:gap-2 overflow-x-auto snap-x snap-mandatory pb-2 xl:pb-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none'] mb-4 lg:mb-3">
+      <div className="-mr-4 pr-4 sm:-mr-6 sm:pr-6 md:-mr-8 md:pr-8 lg:-mr-10 lg:pr-10 xl:mr-0 xl:pr-0 grid grid-rows-2 grid-flow-col auto-cols-[85%] sm:auto-cols-[45%] md:flex md:flex-row xl:grid xl:grid-rows-1 xl:grid-cols-4 gap-3 lg:gap-4 xl:gap-2 overflow-x-auto snap-x snap-mandatory pb-2 xl:pb-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none'] mb-4 lg:mb-3">
         
         {/* Metric 1 */}
         <div className="snap-center md:snap-start md:shrink-0 md:w-[280px] lg:w-[320px] xl:w-auto xl:shrink rounded-2xl border border-gray-200/60 bg-white shadow-sm hover:shadow-md transition-shadow p-4 lg:p-5 flex flex-col justify-between">
