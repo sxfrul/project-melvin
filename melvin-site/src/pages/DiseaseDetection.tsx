@@ -480,7 +480,7 @@ export default function DiseaseDetection() {
                       </div>
 
                       {msg.type === 'text' && (
-                        <p className="text-base lg:text-base text-gray-800 leading-relaxed text-left">
+                        <p className="text-base lg:text-sm text-gray-800 leading-relaxed text-left">
                           {msg.content}
                         </p>
                       )}

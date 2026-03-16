@@ -1,5 +1,6 @@
 import { NavLink, Outlet } from 'react-router-dom';
-import { LayoutDashboard, Bug, Sprout, Leaf } from 'lucide-react';
+import { LayoutDashboard, Bug, Sprout } from 'lucide-react';
+import melvinLogo from '../assets/melvin-textlogo.png';
 
 const MainLayout = () => {
 
@@ -24,11 +25,8 @@ const MainLayout = () => {
       
       {/* macOS Style Sidebar (Frosted Glass) */}
       <aside className="w-64 bg-white/60 backdrop-blur-xl border-r border-gray-200/60 hidden md:flex flex-col z-10 flex-shrink-0">
-        <div className="p-6 pt-8 flex items-center space-x-3">
-          <div className="w-8 h-8 bg-gray-900 rounded-lg flex items-center justify-center shadow-sm">
-            <Leaf className="text-white" size={18} />
-          </div>
-          <span className="text-xl font-semibold tracking-tight text-gray-900">Project Melvin</span>
+        <div className="p-6 pt-8 flex items-center">
+          <img src={melvinLogo} alt="Project Melvin Logo" className="h-8 w-auto object-contain scale-[3] origin-left" />
         </div>
         
         <nav className="flex-1 px-4 py-6 space-y-1.5">
@@ -64,13 +62,10 @@ const MainLayout = () => {
       {/* Main Content Area */}
       <main className="flex-1 flex flex-col h-screen overflow-hidden min-w-0">
         
-        {/* iOS Style Mobile Header */}
-        <header className="md:hidden bg-white/80 backdrop-blur-xl border-b border-gray-200/60 p-4 flex justify-between items-center sticky top-0 z-20">
-          <div className="flex items-center space-x-2">
-             <div className="w-7 h-7 bg-gray-900 rounded-lg flex items-center justify-center">
-              <Leaf className="text-white" size={16} />
-            </div>
-            <span className="text-lg font-semibold tracking-tight text-gray-900">Melvin</span>
+        {/* Transparent Mobile Header */}
+        <header className="md:hidden bg-transparent p-4 flex justify-between items-center sticky top-0 z-20">
+          <div className="flex items-center">
+            <img src={melvinLogo} alt="Melvin Logo" className="h-7 w-auto object-contain object-contain scale-[2.7] origin-left" />
           </div>
           <div className="flex space-x-1">
             <NavLink to="/dashboard" className={mobileLinkClasses}><LayoutDashboard size={20}/></NavLink>
