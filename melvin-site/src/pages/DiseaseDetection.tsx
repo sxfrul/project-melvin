@@ -10,7 +10,10 @@ import {
   Info, 
   Map, 
   Loader2,
-  Link2
+  Link2,
+  MapPin,
+  ChevronRight,
+  Plus
 } from 'lucide-react';
 import melvinLogo from '../assets/melvin-logo.jpg';
 
@@ -318,6 +321,16 @@ export default function DiseaseDetection() {
     return false;
   });
 
+  // --- Pre-Setup State ---
+  const [fields, setFields] = useState([
+    { id: '1', name: 'Field A-1 (Corn)' },
+    { id: '2', name: 'Field B-3 (Wheat)' },
+    { id: '3', name: 'Greenhouse 2 (Tomatoes)' }
+  ]);
+  const [selectedField, setSelectedField] = useState<string | null>(null);
+  const [isCreatingField, setIsCreatingField] = useState(false);
+  const [newFieldName, setNewFieldName] = useState('');
+
   // Start with an empty chat
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputText, setInputText] = useState("");
@@ -325,7 +338,7 @@ export default function DiseaseDetection() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // FIX 1: Only scroll into view if there are actual messages to show
+  // Auto-scroll logic
   useEffect(() => {
     if (messages.length > 0) {
       const timer = setTimeout(() => {
@@ -334,6 +347,15 @@ export default function DiseaseDetection() {
       return () => clearTimeout(timer);
     }
   }, [messages]);
+
+  const handleCreateField = () => {
+    if (!newFieldName.trim()) return;
+    const newField = { id: Date.now().toString(), name: newFieldName };
+    setFields([...fields, newField]);
+    setSelectedField(newField.name);
+    setIsCreatingField(false);
+    setNewFieldName('');
+  };
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -434,6 +456,79 @@ export default function DiseaseDetection() {
   return (
     <div className="flex flex-row relative overflow-hidden h-[calc(100dvh-4.5rem)] md:h-[100dvh] -mx-4 sm:-mx-6 md:-mx-8 lg:-mx-10 -my-4 sm:-my-6 md:-my-8 lg:-my-8 bg-[#f9f9fb]">
       
+      {/* Pre-setup Modal Overlay (Flush & Dark Themed) */}
+      {!selectedField && (
+        <div className="absolute inset-0 z-[60] flex items-center justify-center bg-gray-950/60 backdrop-blur-md animate-in fade-in duration-300">
+          <div className="w-full max-w-md mx-4 p-6 lg:p-8 animate-in zoom-in-95 duration-300">
+            <div className="flex items-center gap-3 mb-2">
+              <div className="p-2 bg-gray-300/10 text-yellow-400 rounded-xl">
+                <MapPin size={24} />
+              </div>
+              <h2 className="text-2xl font-bold text-white">Select a Field</h2>
+            </div>
+            <p className="text-sm text-gray-300 mb-8">
+              Please select the field related to your diagnostic inquiry to help Melvin contextualize the analysis.
+            </p>
+
+            {!isCreatingField ? (
+              <>
+                <div className="space-y-3 mb-6 max-h-60 overflow-y-auto pr-2 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:bg-white/10 [&::-webkit-scrollbar-track]:bg-transparent">
+                  {fields.map((field) => (
+                    <button
+                      key={field.id}
+                      onClick={() => setSelectedField(field.name)}
+                      className="w-full flex items-center justify-between p-4 rounded-xl border border-white/10 bg-white/5 hover:border-indigo-400/50 hover:bg-indigo-500/10 transition-all group text-left"
+                    >
+                      <span className="font-medium text-gray-200 group-hover:text-white">{field.name}</span>
+                      <ChevronRight size={18} className="text-gray-500 group-hover:text-indigo-400" />
+                    </button>
+                  ))}
+                </div>
+                <button
+                  onClick={() => setIsCreatingField(true)}
+                  className="w-full flex items-center justify-center gap-2 py-4 rounded-xl border-2 border-dashed border-white/10 text-gray-400 hover:border-white/30 hover:text-gray-200 transition-colors font-medium"
+                >
+                  <Plus size={18} />
+                  Create New Field
+                </button>
+              </>
+            ) : (
+              <div className="space-y-5 animate-in slide-in-from-right-4 duration-300">
+                <div>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">Field Name</label>
+                  <input
+                    type="text"
+                    autoFocus
+                    value={newFieldName}
+                    onChange={(e) => setNewFieldName(e.target.value)}
+                    placeholder="e.g., Sector 4 (Soybeans)"
+                    className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white focus:ring-1 focus:ring-blue-700 focus:outline-none transition-all placeholder:text-gray-300/50"
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') handleCreateField();
+                    }}
+                  />
+                </div>
+                <div className="flex gap-3">
+                  <button
+                    onClick={() => setIsCreatingField(false)}
+                    className="flex-1 px-4 py-3 rounded-xl border border-white/10 text-gray-300 hover:bg-white/10 font-medium transition-colors"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={handleCreateField}
+                    disabled={!newFieldName.trim()}
+                    className="flex-1 px-4 py-3 rounded-xl bg-indigo-600 text-white hover:bg-indigo-500 font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed border border-transparent"
+                  >
+                    Create
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
       <div className="absolute top-4 right-0 z-20 xl:hidden">
         <button 
           onClick={() => setIsHistoryOpen(true)}
@@ -463,7 +558,7 @@ export default function DiseaseDetection() {
                  <img src={melvinLogo} alt="Melvin AI" className="w-full h-full object-cover scale-225 translate-y-7" />
               </div>
               <h1 className="text-3xl lg:text-4xl font-semibold text-gray-500 mb-10 text-center tracking-tight">
-                How can Melvin help?
+                How can Melvin help with {selectedField}?
               </h1>
             </div>
           ) : (
@@ -555,6 +650,7 @@ export default function DiseaseDetection() {
                 onClick={() => fileInputRef.current?.click()}
                 className="p-2.5 text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-full transition-colors mb-0.5 ml-0.5 flex-shrink-0"
                 title="Attach an image"
+                disabled={!selectedField}
               >
                 <Paperclip size={20} />
               </button>
@@ -571,14 +667,15 @@ export default function DiseaseDetection() {
                 placeholder="Message Melvin AI..." 
                 className="w-full max-h-32 bg-transparent resize-none outline-none py-3 px-3 text-base lg:text-base text-gray-900 placeholder-gray-500" 
                 rows={1} 
+                disabled={!selectedField}
               />
               
               <button 
                 onClick={() => handleTextSubmit()}
                 className={`p-2.5 rounded-full transition-colors mb-0.5 mr-0.5 flex-shrink-0 shadow-sm ${
-                  inputText.trim() ? 'bg-indigo-600 hover:bg-indigo-700 text-white' : 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                  inputText.trim() && selectedField ? 'bg-indigo-600 hover:bg-indigo-700 text-white' : 'bg-gray-100 text-gray-400 cursor-not-allowed'
                 }`}
-                disabled={!inputText.trim()}
+                disabled={!inputText.trim() || !selectedField}
               >
                 <Send size={18} />
               </button>
