@@ -11,9 +11,9 @@ import {
   X, 
   Info, 
   Map, 
-  Activity,
   Loader2,
-  ExternalLink
+  ExternalLink,
+  Link2
 } from 'lucide-react';
 
 // --- Mock Data for Chat History ---
@@ -54,10 +54,45 @@ type Message = {
 };
 
 // --- Components ---
+const ScanningAnimation = () => {
+  const [phase, setPhase] = useState(0);
+  const phases = [
+    'Scanning visual artifacts...',
+    'Analyzing structural anomalies...',
+    'Cross-referencing database...',
+    'Generating diagnostic report...'
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setPhase((prev) => (prev < phases.length - 1 ? prev + 1 : prev));
+    }, 850);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="flex items-center gap-3 text-[13px] lg:text-sm text-gray-600 bg-gray-50 px-4 py-3 rounded-xl border border-gray-200 w-[260px] sm:w-[300px]">
+      <Loader2 size={16} className="animate-spin text-indigo-600 flex-shrink-0" />
+      <div className="relative flex-1 h-5 overflow-hidden">
+        {phases.map((text, i) => (
+          <span
+            key={i}
+            className={`absolute left-0 top-0 transition-opacity duration-300 whitespace-nowrap ${
+              i === phase ? 'opacity-100' : 'opacity-0'
+            }`}
+          >
+            {text}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+};
+
 const AnalysisCard = () => (
   <div className="bg-white border border-gray-200 shadow-sm rounded-2xl p-4 lg:p-5 w-full mt-2 animate-in fade-in slide-in-from-bottom-2 duration-500">
     
-    {/* 3. Generate possible diagnostic and detailed report */}
+    {/* Diagnostic and detailed report */}
     <div className="p-3 bg-red-50 rounded-xl border border-red-100 mb-5 flex items-start gap-3">
       <div className="mt-0.5 p-1.5 bg-red-100 rounded-lg flex-shrink-0">
           <ShieldAlert className="text-red-600 w-4 h-4" />
@@ -73,12 +108,8 @@ const AnalysisCard = () => (
       </div>
     </div>
     
-    {/* 4. Recommendation/Solution */}
+    {/* Recommendation/Solution */}
     <div className="mb-5">
-      <h4 className="text-[11px] lg:text-xs font-semibold text-gray-900 mb-3 tracking-tight flex items-center gap-1.5 uppercase">
-        <FileText size={14} className="text-gray-400" />
-        Recommendations & Solutions
-      </h4>
       <ul className="space-y-3">
         <li className="flex items-start gap-2.5">
           <div className="w-1.5 h-1.5 bg-indigo-500 rounded-full mt-1.5 flex-shrink-0"></div>
@@ -91,18 +122,6 @@ const AnalysisCard = () => (
       </ul>
     </div>
 
-    {/* 5. Related Article (RAG) */}
-    <div className="mb-5 p-3 bg-gray-50 rounded-xl border border-gray-100">
-      <h4 className="text-[11px] lg:text-xs font-semibold text-gray-900 mb-2 tracking-tight flex items-center gap-1.5 uppercase">
-        <ExternalLink size={14} className="text-gray-400" />
-        Related Articles (Retrieved Context)
-      </h4>
-      <a href="#" className="block p-2 hover:bg-white rounded-lg transition-colors border border-transparent hover:border-gray-200">
-        <p className="text-[12px] lg:text-[13px] font-medium text-indigo-600">Managing Northern Corn Leaf Blight in High Humidity Environments</p>
-        <p className="text-[11px] text-gray-500 mt-1 line-clamp-2">Research from the Agricultural Extension highlights that early detection of NCLB is critical. Strobilurin applications before silking yield the best ROI and prevent catastrophic yield loss...</p>
-      </a>
-    </div>
-
     {/* In-chat Action Buttons */}
     <div className="pt-4 border-t border-gray-100 flex gap-2.5 flex-wrap sm:flex-nowrap">
       <button className="w-full sm:flex-1 px-4 py-2 bg-gray-900 text-white text-xs lg:text-sm rounded-xl hover:bg-gray-800 transition font-medium text-center">
@@ -112,6 +131,48 @@ const AnalysisCard = () => (
         Save Report
       </button>
     </div>
+  </div>
+);
+
+// Real website mockup using a horizontal open-graph style link preview
+const RelatedArticleCard = () => (
+  <div className="bg-white border border-gray-200 shadow-sm rounded-2xl overflow-hidden mt-3 max-w-[420px] animate-in fade-in slide-in-from-bottom-3 duration-700">
+    <div className="px-3 py-2 border-b border-gray-100 flex items-center gap-2 bg-gray-50/80">
+      <Link2 size={14} className="text-indigo-500" />
+      <span className="text-[10px] font-bold text-gray-600 uppercase tracking-wider">Related Article</span>
+    </div>
+    
+    <a 
+      href="https://cropprotectionnetwork.org/publications/an-overview-of-northern-corn-leaf-blight" 
+      target="_blank" 
+      rel="noopener noreferrer" 
+      className="flex flex-row hover:bg-gray-50 transition-colors group h-[110px]"
+    >
+      {/* Site Metadata & Content (Left Side) */}
+      <div className="p-3.5 flex-1 min-w-0 flex flex-col justify-center">
+        <div className="flex items-center gap-1.5 mb-1.5">
+          {/* CPN Favicon Mockup */}
+          <span className="text-[10px] text-gray-500 font-semibold uppercase tracking-wide truncate">cropprotectionnetwork.org</span>
+        </div>
+        
+        <h4 className="text-[12px] font-semibold text-gray-900 mb-1 leading-tight line-clamp-2 pr-2">
+          An Overview of Northern Corn Leaf Blight
+        </h4>
+        
+        <p className="text-[11px] text-gray-500 line-clamp-2 leading-relaxed pr-2">
+          Northern corn leaf blight (NCLB) is a foliar disease of corn caused by the fungus Exserohilum turcicum. It occurs in humid climates...
+        </p>
+      </div>
+
+      {/* OG Image Mockup (Right Side) */}
+      <div className="w-[110px] h-full overflow-hidden bg-gray-100 relative flex-shrink-0 border-l border-gray-100">
+        <img 
+          src="https://cropprotectionnetwork.s3.amazonaws.com/brand/crop-protection-network-logo.png" 
+          alt="Corn field showing blight" 
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+        />
+      </div>
+    </a>
   </div>
 );
 
@@ -141,7 +202,7 @@ export default function DiseaseDetection() {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  // 1. Image Upload Handler
+  // Image Upload Handler
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -162,7 +223,7 @@ export default function DiseaseDetection() {
     // Reset input
     if (fileInputRef.current) fileInputRef.current.value = '';
 
-    // 2. Image Received: Scanning, Analyzing, Comparing
+    // Simulate AI loading/scanning
     const loadingId = (Date.now() + 1).toString();
     setTimeout(() => {
       setMessages(prev => [
@@ -170,12 +231,11 @@ export default function DiseaseDetection() {
         {
           id: loadingId,
           sender: 'bot',
-          type: 'loading',
-          content: 'Scanning image, analyzing structures, and comparing against database...'
+          type: 'loading'
         }
       ]);
 
-      // 3, 4, 5. Generate Report (Transition from loading to analysis)
+      // Generate Report (Transition from loading to analysis)
       setTimeout(() => {
         setMessages(prev => {
           const filtered = prev.filter(m => m.id !== loadingId);
@@ -188,7 +248,7 @@ export default function DiseaseDetection() {
             }
           ];
         });
-      }, 3500); // Fake delay for processing
+      }, 3500); 
     }, 600);
   };
 
@@ -264,19 +324,17 @@ export default function DiseaseDetection() {
                     )}
                     
                     {msg.type === 'loading' && (
-                      <div className="flex items-center gap-3 text-[13px] lg:text-sm text-gray-600 bg-gray-50 px-4 py-3 rounded-xl border border-gray-200">
-                        <Loader2 size={16} className="animate-spin text-indigo-600" />
-                        {msg.content}
-                      </div>
+                      <ScanningAnimation />
                     )}
                     
                     {msg.type === 'analysis' && (
-                      <>
-                        <p className="text-[13px] lg:text-sm text-gray-800 leading-relaxed text-left">
+                      <div className="w-full">
+                        <p className="text-[13px] lg:text-sm text-gray-800 leading-relaxed text-left mb-3">
                           Scan complete. I've analyzed the leaf image. Here is the detailed diagnostic report:
                         </p>
                         <AnalysisCard />
-                      </>
+                        <RelatedArticleCard />
+                      </div>
                     )}
                   </div>
                 )}
