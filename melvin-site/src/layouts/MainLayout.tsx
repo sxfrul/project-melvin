@@ -16,8 +16,8 @@ const MainLayout = () => {
   const mobileLinkClasses = ({ isActive }: { isActive: boolean }) =>
     `p-2.5 rounded-xl transition-all ${
       isActive 
-        ? 'bg-gray-100 text-gray-900' 
-        : 'text-gray-500 hover:bg-gray-50'
+        ? 'bg-gray-200/60 text-gray-900' 
+        : 'text-gray-500 hover:bg-gray-100/60'
     }`;
 
   return (
@@ -62,10 +62,17 @@ const MainLayout = () => {
       {/* Main Content Area */}
       <main className="flex-1 flex flex-col h-screen overflow-hidden min-w-0">
         
-        {/* Transparent Mobile Header */}
-        <header className="md:hidden bg-transparent p-4 flex justify-between items-center sticky top-0 z-20">
+        {/* Transparent Mobile Header - FIXED WITH FROSTED GLASS */}
+        <header
+          className="md:hidden border-b border-white/20 p-4 flex justify-between items-center sticky top-0 z-20"
+          style={{
+            backgroundColor: 'rgba(245, 245, 247, 0.6)',
+            backdropFilter: 'blur(20px) saturate(180%)',
+            WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+          }}
+        >
           <div className="flex items-center">
-            <img src={melvinLogo} alt="Melvin Logo" className="h-7 w-auto object-contain object-contain scale-[2.7] origin-left" />
+            <img src={melvinLogo} alt="Melvin Logo" className="h-7 w-auto object-contain scale-[2.7] origin-left" />
           </div>
           <div className="flex space-x-1">
             <NavLink to="/dashboard" className={mobileLinkClasses}><LayoutDashboard size={20}/></NavLink>

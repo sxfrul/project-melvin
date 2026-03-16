@@ -325,11 +325,14 @@ export default function DiseaseDetection() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  // FIX 1: Only scroll into view if there are actual messages to show
   useEffect(() => {
-    const timer = setTimeout(() => {
-      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }, 100);
-    return () => clearTimeout(timer);
+    if (messages.length > 0) {
+      const timer = setTimeout(() => {
+        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+      return () => clearTimeout(timer);
+    }
   }, [messages]);
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -565,8 +568,8 @@ export default function DiseaseDetection() {
                     handleTextSubmit();
                   }
                 }}
-                placeholder="Message Melvin AI or drop an image..." 
-                className="w-full max-h-32 bg-transparent resize-none outline-none py-3 px-3 text-[13px] lg:text-sm text-gray-900 placeholder-gray-500" 
+                placeholder="Message Melvin AI..." 
+                className="w-full max-h-32 bg-transparent resize-none outline-none py-3 px-3 text-base lg:text-sm text-gray-900 placeholder-gray-500" 
                 rows={1} 
               />
               
