@@ -60,11 +60,12 @@ const MainLayout = () => {
       </aside>
 
       {/* Main Content Area */}
-      <main className="flex-1 flex flex-col h-screen overflow-hidden min-w-0">
+      {/* 1. Changed to handle the scrolling: removed flex-col and overflow-hidden, added overflow-y-auto */}
+      <main className="flex-1 h-screen overflow-y-auto min-w-0">
         
         {/* Transparent Mobile Header - FIXED WITH FROSTED GLASS */}
         <header
-          className="md:hidden border-b border-white/20 p-4 flex justify-between items-center sticky top-0 z-20"
+          className="md:hidden border-b border-gray-200/100 p-4 flex justify-between items-center sticky top-0 z-20"
           style={{
             backgroundColor: 'rgba(245, 245, 247, 0.6)',
             backdropFilter: 'blur(20px) saturate(180%)',
@@ -82,7 +83,8 @@ const MainLayout = () => {
         </header>
 
         {/* Dynamic Page Content */}
-        <div className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8 lg:px-10 lg:py-8">
+        {/* 2. Removed flex-1 and overflow-y-auto since <main> now handles the scrolling */}
+        <div className="p-4 sm:p-6 md:p-8 lg:px-10 lg:py-8">
           <div className="w-full h-full flex flex-col">
             {/* Page Content Rendered Here */}
             <div className="w-full flex-1">

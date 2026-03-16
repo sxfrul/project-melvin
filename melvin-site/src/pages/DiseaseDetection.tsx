@@ -583,9 +583,6 @@ export default function DiseaseDetection() {
                 <Send size={18} />
               </button>
             </div>
-            <p className="text-center text-[10px] text-gray-400 font-medium px-4">
-              Melvin is AI and can make mistakes. Please verify critical diagnostic information.
-            </p>
           </div>
         </div>
       </div>
