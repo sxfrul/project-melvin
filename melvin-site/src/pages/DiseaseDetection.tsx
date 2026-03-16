@@ -118,15 +118,11 @@ const ScanningAnimation = () => {
 };
 
 const AnalysisCard = ({ onComplete }: { onComplete?: () => void }) => {
-  const [step, setStep] = useState(0); // 0: report, 1: bullet1, 2: bullet2, 3: done
+  const [step, setStep] = useState(0);
 
   return (
     <div className="bg-white border border-gray-200 shadow-sm rounded-2xl p-4 lg:p-5 w-full mt-2 animate-in fade-in slide-in-from-bottom-2 duration-500 transition-all">
-      
-      {/* Joined Heatmap and Diagnostic Container */}
       <div className="mb-4 rounded-xl border border-gray-200 overflow-hidden flex flex-col">
-        
-        {/* 1. Leaf Area Heatmap (Top Section - Gray) */}
         <div className="bg-gray-50 p-4 lg:p-5">
           <div className="mb-4">
             <h3 className="text-[13px] lg:text-sm font-semibold text-gray-900 tracking-tight flex items-center gap-1.5">
@@ -136,26 +132,12 @@ const AnalysisCard = ({ onComplete }: { onComplete?: () => void }) => {
           </div>
           
           <div className="flex flex-col md:flex-row gap-4 lg:gap-6 items-stretch">
-            
-            {/* Realistic Heatmap Mockup Container */}
             <div className="relative w-full md:w-1/2 min-h-[200px] md:min-h-0 bg-gray-900 rounded-lg overflow-hidden flex items-center justify-center bg-[url('https://images.unsplash.com/photo-1618507763251-9ea0a27ef29e?q=80&w=735&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')] bg-cover bg-center">
-              
-              {/* Lighter dark overlay so the leaf veins are clearly visible beneath the heatmap */}
               <div className="absolute inset-0 bg-black/20"></div>
-
-              {/* Primary Hotspot (Severe concentration) */}
               <div className="absolute top-[15%] left-[20%] w-36 h-36 bg-[radial-gradient(circle,rgba(239,68,68,0.9)_10%,rgba(245,158,11,0.7)_40%,rgba(34,197,94,0.4)_70%,transparent_100%)] blur-[2px] rounded-full mix-blend-screen"></div>
-              
-              {/* Secondary Hotspot (Spreading area) */}
               <div className="absolute top-[40%] right-[15%] w-52 h-52 bg-[radial-gradient(circle,rgba(239,68,68,0.8)_15%,rgba(245,158,11,0.6)_45%,rgba(59,130,246,0.3)_80%,transparent_100%)] blur-[4px] rounded-full mix-blend-screen"></div>
-              
-              {/* Tertiary Hotspot (Mild/Early stage) */}
               <div className="absolute bottom-[15%] left-[45%] w-28 h-28 bg-[radial-gradient(circle,rgba(245,158,11,0.8)_20%,rgba(34,197,94,0.5)_60%,transparent_100%)] blur-[2px] rounded-full mix-blend-screen"></div>
-
-              {/* Analytical Spatial Grid Overlay */}
               <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.15)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.15)_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none"></div>
-              
-              {/* Coordinate Target Markers */}
               <div className="absolute top-[25%] left-[28%] w-4 h-4 border border-white/70 shadow-[0_0_4px_rgba(255,255,255,0.5)]"></div>
               <div className="absolute top-[55%] right-[28%] w-4 h-4 border border-white/70 shadow-[0_0_4px_rgba(255,255,255,0.5)]"></div>
             </div>
@@ -189,7 +171,6 @@ const AnalysisCard = ({ onComplete }: { onComplete?: () => void }) => {
           </div>
         </div>
 
-        {/* 2. Diagnostic Card (Bottom Section - Red) */}
         <div className="bg-red-50 p-3 lg:p-4 border-t border-red-100 flex items-start gap-3">
           <div className="mt-0.5 p-1.5 bg-red-100 rounded-lg flex-shrink-0">
               <ShieldAlert className="text-red-600 w-4 h-4" />
@@ -201,10 +182,8 @@ const AnalysisCard = ({ onComplete }: { onComplete?: () => void }) => {
             </p>
           </div>
         </div>
-
       </div>
       
-      {/* 3. Detailed Report - Container expands naturally with content */}
       <div className="mb-4">
         <p className="text-[12px] lg:text-[13px] text-gray-700 leading-relaxed">
           <Typewriter 
@@ -217,7 +196,6 @@ const AnalysisCard = ({ onComplete }: { onComplete?: () => void }) => {
         </p>
       </div>
 
-      {/* 4. Recommendation/Solution Bullet Points - Container expands naturally with content */}
       <div className="mb-5">
         <ul className="space-y-3">
           <li className={`flex items-start gap-2.5 transition-opacity duration-300 ${step >= 1 ? 'opacity-100' : 'hidden'}`}>
@@ -254,12 +232,11 @@ const AnalysisCard = ({ onComplete }: { onComplete?: () => void }) => {
         </ul>
       </div>
 
-      {/* In-chat Action Buttons */}
       <div className={`pt-4 border-t border-gray-100 flex gap-2.5 flex-wrap sm:flex-nowrap transition-opacity duration-500 ${step >= 3 ? 'opacity-100' : 'opacity-0 hidden'}`}>
-        <button className="w-full sm:flex-1 px-4 py-2 bg-gray-900 text-white text-xs lg:text-sm rounded-xl hover:bg-gray-800 transition font-medium text-center">
+        <button className="w-full sm:flex-1 px-4 py-2 bg-gray-900 text-white text-sm lg:text-sm rounded-xl hover:bg-gray-800 transition font-medium text-center">
           Add to Tasklist
         </button>
-        <button className="w-full sm:w-auto px-4 py-2 bg-gray-50 border border-gray-200 text-gray-700 text-xs lg:text-sm rounded-xl hover:bg-gray-100 transition font-medium">
+        <button className="w-full sm:w-auto px-4 py-2 bg-gray-50 border border-gray-200 text-gray-700 text-sm lg:text-sm rounded-xl hover:bg-gray-100 transition font-medium">
           Save Report
         </button>
       </div>
@@ -267,7 +244,6 @@ const AnalysisCard = ({ onComplete }: { onComplete?: () => void }) => {
   );
 };
 
-// Real website mockup using a horizontal open-graph style link preview
 const RelatedArticleCard = () => (
   <div className="bg-white border border-gray-200 shadow-sm rounded-2xl overflow-hidden mt-2 max-w-[420px] animate-in fade-in slide-in-from-bottom-3 duration-700">
     <div className="px-3 py-2 border-b border-gray-100 flex items-center gap-2 bg-gray-50/80">
@@ -281,23 +257,18 @@ const RelatedArticleCard = () => (
       rel="noopener noreferrer" 
       className="flex flex-row hover:bg-gray-50 transition-colors group h-[110px]"
     >
-      {/* Site Metadata & Content (Left Side) */}
       <div className="p-3.5 flex-1 min-w-0 flex flex-col justify-center">
         <div className="flex items-center gap-1.5 mb-1.5">
-          {/* CPN Favicon Mockup */}
           <span className="text-[10px] text-gray-500 font-semibold uppercase tracking-wide truncate">cropprotectionnetwork.org</span>
         </div>
-        
         <h4 className="text-[12px] font-semibold text-gray-900 mb-1 leading-tight line-clamp-2 pr-2">
           An Overview of Northern Corn Leaf Blight
         </h4>
-        
         <p className="text-[11px] text-gray-500 line-clamp-2 leading-relaxed pr-2">
           Northern corn leaf blight (NCLB) is a foliar disease of corn caused by the fungus Exserohilum turcicum. It occurs in humid climates...
         </p>
       </div>
 
-      {/* OG Image Mockup (Right Side) */}
       <div className="w-[110px] h-full overflow-hidden bg-gray-100 relative flex-shrink-0 border-l border-gray-100">
         <img 
           src="https://cropprotectionnetwork.s3.amazonaws.com/brand/crop-protection-network-logo.png" 
@@ -320,7 +291,7 @@ const AnalysisMessageContent = ({ onShowArticleClicked }: { onShowArticleClicked
 
   return (
     <div className="w-full flex flex-col items-start">
-      <p className="text-[13px] lg:text-sm text-gray-800 leading-relaxed text-left mb-3">
+      <p className="text-base lg:text-sm text-gray-800 leading-relaxed text-left mb-3">
         Scan complete. I've analyzed the leaf image. Here is the detailed diagnostic report:
       </p>
       <AnalysisCard onComplete={() => setTypingDone(true)} />
@@ -329,7 +300,7 @@ const AnalysisMessageContent = ({ onShowArticleClicked }: { onShowArticleClicked
         <div className="mt-3 animate-in fade-in duration-500">
           <button 
             onClick={handleChipClick}
-            className="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-gray-200 text-gray-600 shadow-sm rounded-full text-[11px] lg:text-xs font-medium hover:border-indigo-300 hover:text-indigo-700 transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-gray-200 text-gray-600 shadow-sm rounded-full text-sm lg:text-xs font-medium hover:border-indigo-300 hover:text-indigo-700 transition-colors"
           >
             <Link2 size={14} /> Show Related Articles
           </button>
@@ -347,34 +318,24 @@ export default function DiseaseDetection() {
     return false;
   });
 
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: 'init-1',
-      sender: 'bot',
-      type: 'text',
-      content: "Hi there! I'm ready to analyze your crop images. You can upload a scan of a leaf using the paperclip icon below, and I'll run it through our disease detection model."
-    }
-  ]);
+  // Start with an empty chat
+  const [messages, setMessages] = useState<Message[]>([]);
   const [inputText, setInputText] = useState("");
   
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // Auto-scroll to bottom of chat
   useEffect(() => {
-    // Adding a slight delay to ensure dynamic content expansion gets scrolled into view
     const timer = setTimeout(() => {
       messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, 100);
     return () => clearTimeout(timer);
   }, [messages]);
 
-  // Image Upload Handler
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    // Add user's image message
     const userMsgId = Date.now().toString();
     setMessages(prev => [
       ...prev, 
@@ -387,10 +348,8 @@ export default function DiseaseDetection() {
       }
     ]);
 
-    // Reset input
     if (fileInputRef.current) fileInputRef.current.value = '';
 
-    // Simulate AI loading/scanning
     const loadingId = (Date.now() + 1).toString();
     setTimeout(() => {
       setMessages(prev => [
@@ -402,7 +361,6 @@ export default function DiseaseDetection() {
         }
       ]);
 
-      // Generate Report (Transition from loading to analysis)
       setTimeout(() => {
         setMessages(prev => {
           const filtered = prev.filter(m => m.id !== loadingId);
@@ -419,8 +377,9 @@ export default function DiseaseDetection() {
     }, 600);
   };
 
-  const handleTextSubmit = () => {
-    if (!inputText.trim()) return;
+  const handleTextSubmit = (overrideText?: string) => {
+    const textToSubmit = overrideText || inputText;
+    if (!textToSubmit.trim()) return;
     
     setMessages(prev => [
       ...prev,
@@ -428,12 +387,11 @@ export default function DiseaseDetection() {
         id: Date.now().toString(),
         sender: 'user',
         type: 'text',
-        content: inputText
+        content: textToSubmit
       }
     ]);
-    setInputText("");
+    if (!overrideText) setInputText("");
 
-    // Generic bot response for text inputs
     setTimeout(() => {
       setMessages(prev => [
         ...prev,
@@ -448,7 +406,6 @@ export default function DiseaseDetection() {
   };
 
   const handleShowArticle = () => {
-    // 1. Send user message
     setMessages(prev => [
       ...prev,
       {
@@ -459,7 +416,6 @@ export default function DiseaseDetection() {
       }
     ]);
 
-    // 2. Respond with the bot's article card message
     setTimeout(() => {
       setMessages(prev => [
         ...prev,
@@ -473,9 +429,8 @@ export default function DiseaseDetection() {
   };
 
   return (
-    <div className="flex flex-row relative overflow-hidden h-[calc(100vh-4.5rem)] md:h-screen -mx-4 sm:-mx-6 md:-mx-8 lg:-mx-10 -my-4 sm:-my-6 md:-my-8 lg:-my-8">
+    <div className="flex flex-row relative overflow-hidden h-[calc(100vh-4.5rem)] md:h-screen -mx-4 sm:-mx-6 md:-mx-8 lg:-mx-10 -my-4 sm:-my-6 md:-my-8 lg:-my-8 bg-[#f9f9fb]">
       
-      {/* Mobile/Tablet Floating Toggle Button */}
       <div className="absolute top-4 right-0 z-20 xl:hidden">
         <button 
           onClick={() => setIsHistoryOpen(true)}
@@ -486,7 +441,6 @@ export default function DiseaseDetection() {
         </button>
       </div>
 
-      {/* Mobile Backdrop Overlay */}
       {isHistoryOpen && (
         <div 
           className="fixed inset-0 bg-gray-900/20 backdrop-blur-sm z-40 xl:hidden transition-opacity"
@@ -494,107 +448,98 @@ export default function DiseaseDetection() {
         />
       )}
 
-      {/* Left/Center Column: Main Chat Area */}
       <div className={`flex-1 flex flex-col min-w-0 transition-all duration-300 h-full ${isHistoryOpen ? 'xl:pr-2' : 'pr-0'}`}>
         
-        {/* Scrollable Chat Messages Area */}
-        <div className="flex-1 overflow-y-auto overflow-x-hidden px-4 sm:px-6 lg:px-10 pb-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']">
-          <div className="max-w-3xl mx-auto w-full flex flex-col space-y-8 pt-8">
-            
-            {messages.map((msg) => (
-              <div key={msg.id} className={`flex w-full ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
-                
-                {/* BOT MESSAGES */}
-                {msg.sender === 'bot' && (
-                  <div className="flex flex-col gap-2.5 items-start max-w-2xl w-full">
-                    <div className="w-8 h-8 rounded-full overflow-hidden shadow-sm border border-gray-100">
-                        <img
-                            src={melvinLogo}
-                            alt="Melvin AI"
-                            className="w-full h-full object-cover scale-225 translate-y-4"
-                        />
-                    </div>
-                    
-                    {msg.type === 'text' && (
-                      <p className="text-[13px] lg:text-sm text-gray-800 leading-relaxed text-left">
-                        {msg.content}
-                      </p>
-                    )}
-                    
-                    {msg.type === 'loading' && (
-                      <ScanningAnimation />
-                    )}
-                    
-                    {msg.type === 'analysis' && (
-                      <AnalysisMessageContent onShowArticleClicked={handleShowArticle} />
-                    )}
-
-                    {msg.type === 'article' && (
-                      <div className="w-full flex flex-col items-start animate-in fade-in slide-in-from-bottom-2 duration-500">
-                        <p className="text-[13px] lg:text-sm text-gray-800 leading-relaxed text-left mb-1">
-                          Here is a resource with comprehensive information regarding the detected disease:
-                        </p>
-                        <RelatedArticleCard />
+        {/* Main Content Area */}
+        <div className="flex-1 overflow-y-auto overflow-x-hidden px-4 sm:px-6 lg:px-10 pb-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none'] flex flex-col">
+          
+          {messages.length === 0 ? (
+            // Empty State / Welcome Screen
+            <div className="flex-1 flex flex-col items-center justify-center animate-in fade-in duration-700 max-w-3xl mx-auto w-full py-10">
+              <div className="w-16 h-16 rounded-full overflow-hidden shadow-sm border border-gray-100 mb-6 flex-shrink-0">
+                 <img src={melvinLogo} alt="Melvin AI" className="w-full h-full object-cover scale-225 translate-y-7" />
+              </div>
+              <h1 className="text-3xl lg:text-4xl font-semibold text-gray-800 mb-10 text-center tracking-tight">
+                What can I help with?
+              </h1>
+            </div>
+          ) : (
+            // Chat History Screen
+            <div className="max-w-3xl mx-auto w-full flex flex-col space-y-8 pt-8">
+              {messages.map((msg) => (
+                <div key={msg.id} className={`flex w-full ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
+                  
+                  {msg.sender === 'bot' && (
+                    <div className="flex flex-col gap-2.5 items-start max-w-2xl w-full">
+                      <div className="w-8 h-8 rounded-full overflow-hidden shadow-sm border border-gray-100 flex-shrink-0">
+                          <img
+                              src={melvinLogo}
+                              alt="Melvin AI"
+                              className="w-full h-full object-cover scale-225 translate-y-4"
+                          />
                       </div>
-                    )}
-                  </div>
-                )}
 
-                {/* USER MESSAGES */}
-                {msg.sender === 'user' && (
-                  <div className="flex flex-col gap-3 items-end">
-                    {msg.type === 'image' && (
-                      <div className="flex items-center gap-3 bg-white border border-gray-200 p-2 pr-4 rounded-xl w-fit shadow-sm text-left">
-                         <div className="w-10 h-10 bg-indigo-50 rounded-lg flex items-center justify-center">
-                            <ImageIcon size={20} className="text-indigo-600" />
-                         </div>
-                         <div>
-                           <p className="text-xs font-semibold text-gray-900">{msg.fileName}</p>
-                           <p className="text-[10px] text-gray-500">{msg.fileSize} • Image</p>
-                         </div>
-                      </div>
-                    )}
-                    
-                    {msg.type === 'text' && msg.content && (
-                      <div className="bg-gray-100 border border-gray-200/60 px-4 py-2.5 rounded-2xl rounded-tr-sm max-w-lg animate-in fade-in slide-in-from-right-2 duration-300">
-                        <p className="text-[13px] lg:text-sm text-gray-800 leading-relaxed text-left">
+                      {msg.type === 'text' && (
+                        <p className="text-base lg:text-base text-gray-800 leading-relaxed text-left">
                           {msg.content}
                         </p>
-                      </div>
-                    )}
-                  </div>
-                )}
-              </div>
-            ))}
-            
-            <div ref={messagesEndRef} className="h-4" />
-          </div>
+                      )}
+                      
+                      {msg.type === 'loading' && (
+                        <ScanningAnimation />
+                      )}
+                      
+                      {msg.type === 'analysis' && (
+                        <AnalysisMessageContent onShowArticleClicked={handleShowArticle} />
+                      )}
+
+                      {msg.type === 'article' && (
+                        <div className="w-full flex flex-col items-start animate-in fade-in slide-in-from-bottom-2 duration-500">
+                          <p className="text-base lg:text-sm text-gray-800 leading-relaxed text-left mb-1">
+                            Here is a resource with comprehensive information regarding the detected disease:
+                          </p>
+                          <RelatedArticleCard />
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {msg.sender === 'user' && (
+                    <div className="flex flex-col gap-3 items-end">
+                      {msg.type === 'image' && (
+                        <div className="flex items-center gap-3 bg-white border border-gray-200 p-2 pr-4 rounded-xl w-fit shadow-sm text-left">
+                          <div className="w-10 h-10 bg-indigo-50 rounded-lg flex items-center justify-center">
+                              <ImageIcon size={20} className="text-indigo-600" />
+                          </div>
+                          <div>
+                            <p className="text-xs font-semibold text-gray-900">{msg.fileName}</p>
+                            <p className="text-[10px] text-gray-500">{msg.fileSize} • Image</p>
+                          </div>
+                        </div>
+                      )}
+                      
+                      {msg.type === 'text' && msg.content && (
+                        <div className="bg-gray-100 border border-gray-200/60 px-4 py-2.5 rounded-2xl rounded-tr-sm max-w-lg animate-in fade-in slide-in-from-right-2 duration-300">
+                          <p className="text-base lg:text-sm text-gray-800 leading-relaxed text-left">
+                            {msg.content}
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              ))}
+              <div ref={messagesEndRef} className="h-4" />
+            </div>
+          )}
         </div>
 
-        {/* Fixed Input Area */}
-        <div className="flex-none w-full bg-[#f5f5f7] bg-opacity-95 backdrop-blur-sm pt-2 pb-6 lg:pb-8 border-t border-gray-200/50 px-4 sm:px-6 lg:px-10">
+        {/* Bottom Input Area */}
+        <div className="flex-none w-full bg-[#f9f9fb] bg-opacity-95 backdrop-blur-sm pt-2 pb-6 lg:pb-8 px-4 sm:px-6 lg:px-10">
           <div className="max-w-3xl mx-auto w-full flex flex-col gap-3">
             
-            {/* Contextual Suggestion Chips */}
-            <div className="flex gap-2 overflow-x-auto [&::-webkit-scrollbar]:hidden pb-1">
-               <button 
-                 onClick={() => setInputText("What causes Corn Leaf Blight?")}
-                 className="whitespace-nowrap px-3 py-1.5 bg-white border border-gray-200 text-gray-600 text-[11px] lg:text-xs font-medium rounded-full shadow-sm hover:border-indigo-300 hover:text-indigo-700 transition-colors flex items-center gap-1.5"
-                >
-                 <Info size={12} /> What causes Corn Leaf Blight?
-               </button>
-               <button 
-                 onClick={() => setInputText("Is this spreading to Field B-2?")}
-                 className="whitespace-nowrap px-3 py-1.5 bg-white border border-gray-200 text-gray-600 text-[11px] lg:text-xs font-medium rounded-full shadow-sm hover:border-indigo-300 hover:text-indigo-700 transition-colors flex items-center gap-1.5"
-                >
-                 <Map size={12} /> Is this spreading to Field B-2?
-               </button>
-            </div>
-
-            {/* Chat Input */}
             <div className="relative bg-white border border-gray-200 shadow-sm rounded-[24px] flex items-end p-2 focus-within:ring-4 focus-within:ring-indigo-500/10 focus-within:border-indigo-400 transition-all">
               
-              {/* Hidden File Input */}
               <input 
                 type="file" 
                 ref={fileInputRef} 
@@ -606,6 +551,7 @@ export default function DiseaseDetection() {
               <button 
                 onClick={() => fileInputRef.current?.click()}
                 className="p-2.5 text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-full transition-colors mb-0.5 ml-0.5 flex-shrink-0"
+                title="Attach an image"
               >
                 <Paperclip size={20} />
               </button>
@@ -625,20 +571,22 @@ export default function DiseaseDetection() {
               />
               
               <button 
-                onClick={handleTextSubmit}
-                className="p-2.5 text-white bg-indigo-600 hover:bg-indigo-700 rounded-full transition-colors mb-0.5 mr-0.5 flex-shrink-0 shadow-sm"
+                onClick={() => handleTextSubmit()}
+                className={`p-2.5 rounded-full transition-colors mb-0.5 mr-0.5 flex-shrink-0 shadow-sm ${
+                  inputText.trim() ? 'bg-indigo-600 hover:bg-indigo-700 text-white' : 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                }`}
+                disabled={!inputText.trim()}
               >
                 <Send size={18} />
               </button>
             </div>
             <p className="text-center text-[10px] text-gray-400 font-medium px-4">
-              Melvin is AI and can make mistakes.
+              Melvin is AI and can make mistakes. Please verify critical diagnostic information.
             </p>
           </div>
         </div>
       </div>
 
-      {/* Middle Divider: Toggle Button Column (Desktop Only) */}
       <div className="hidden xl:flex flex-col items-center justify-start pt-3 px-1.5 z-10">
         <button 
           onClick={() => setIsHistoryOpen(!isHistoryOpen)}
@@ -649,10 +597,10 @@ export default function DiseaseDetection() {
         </button>
       </div>
 
-      {/* Right Column: Historical Analysis Panel */}
+      {/* Sidebar Chat History */}
       <div 
         className={`
-          fixed inset-y-0 right-0 z-50 bg-[#f5f5f7] shadow-2xl transition-transform duration-300 ease-in-out
+          fixed inset-y-0 right-0 z-50 bg-[#f9f9fb] shadow-2xl transition-transform duration-300 ease-in-out
           xl:static xl:bg-transparent xl:shadow-none xl:z-auto xl:flex-shrink-0 xl:transition-all xl:overflow-hidden xl:border-l xl:border-gray-200/80
           ${isHistoryOpen 
             ? 'translate-x-0 xl:w-64 xl:opacity-100' 
