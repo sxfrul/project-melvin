@@ -291,7 +291,7 @@ const AnalysisMessageContent = ({ onShowArticleClicked }: { onShowArticleClicked
 
   return (
     <div className="w-full flex flex-col items-start">
-      <p className="text-base lg:text-sm text-gray-800 leading-relaxed text-left mb-3">
+      <p className="text-base lg:text-base text-gray-800 leading-relaxed text-left mb-3">
         Scan complete. I've analyzed the leaf image. Here is the detailed diagnostic report:
       </p>
       <AnalysisCard onComplete={() => setTypingDone(true)} />
@@ -300,7 +300,7 @@ const AnalysisMessageContent = ({ onShowArticleClicked }: { onShowArticleClicked
         <div className="mt-3 animate-in fade-in duration-500">
           <button 
             onClick={handleChipClick}
-            className="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-gray-200 text-gray-600 shadow-sm rounded-full text-sm lg:text-xs font-medium hover:border-indigo-300 hover:text-indigo-700 transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-gray-200 text-gray-600 shadow-sm rounded-full text-sm lg:text-sm font-medium hover:border-indigo-300 hover:text-indigo-700 transition-colors"
           >
             <Link2 size={14} /> Show Related Articles
           </button>
