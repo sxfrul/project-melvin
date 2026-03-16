@@ -316,7 +316,7 @@ export default function Dashboard() {
               </div>
             </div>
             
-            <div className="grid grid-cols-2 gap-3 lg:gap-4 pt-2">
+            <div className="grid grid-cols-2 gap-1 lg:gap-1 pt-2">
               <div className="bg-white p-3 rounded-lg border border-gray-200">
                 <p className="text-xs text-gray-500 mb-1">High Severity</p>
                 <p className="font-semibold text-gray-900">12.1%</p>

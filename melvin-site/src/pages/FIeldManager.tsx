@@ -76,7 +76,7 @@ const mockFields = [
     severity: 'Healthy', 
     lastScan: '1 week ago',
     stage: 'Tillering Stage',
-    image: 'https://images.unsplash.com/photo-1574322651667-17eb1154edfc?auto=format&fit=crop&q=80&w=200&h=200'
+    image: 'https://images.unsplash.com/photo-1635372638513-8a960010a0ff?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
   },
 ];
 
@@ -89,8 +89,8 @@ export default function FieldManager() {
   );
 
   const getHealthColor = (health: number) => {
-    if (health >= 85) return 'bg-green-500';
-    if (health >= 65) return 'bg-yellow-500';
+    if (health >= 85) return 'bg-green-600';
+    if (health >= 65) return 'bg-amber-500';
     if (health >= 50) return 'bg-orange-500';
     return 'bg-red-500';
   };
@@ -106,9 +106,6 @@ export default function FieldManager() {
         </div>
         
         <div className="flex items-center gap-3">
-          <button className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 text-gray-700 text-sm font-medium rounded-xl hover:bg-gray-50 transition-colors shadow-sm">
-            <Filter size={16} /> Filter
-          </button>
           <button className="flex items-center gap-2 px-4 py-2 bg-green-700 text-white text-sm font-medium rounded-xl hover:bg-indigo-700 transition-colors shadow-sm">
             <Plus size={16} /> Add Field
           </button>
@@ -123,7 +120,7 @@ export default function FieldManager() {
         </div>
         <div className="bg-white p-4 rounded-2xl border border-gray-200/60 shadow-sm flex flex-col justify-center">
           <p className="text-xs text-gray-500 font-medium mb-1">Fields at Risk</p>
-          <p className="text-2xl font-semibold text-red-600">2</p>
+          <p className="text-2xl font-semibold text-gray-900">2</p>
         </div>
         <div className="bg-white p-4 rounded-2xl border border-gray-200/60 shadow-sm flex flex-col justify-center">
           <p className="text-xs text-gray-500 font-medium mb-1">Total Coverage</p>
@@ -136,17 +133,23 @@ export default function FieldManager() {
       </div>
 
       {/* Search Bar */}
-      <div className="relative mb-6">
+      <div className="relative mb-6 flex items-center">
         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
           <Search className="h-5 w-5 text-gray-400" />
         </div>
         <input
           type="text"
-          className="block w-full pl-10 pr-3 py-3 border border-gray-200 rounded-xl leading-5 bg-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 sm:text-sm shadow-sm transition-all"
+          className="block w-full pl-10 pr-12 py-3 border border-gray-200 rounded-xl leading-5 bg-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 sm:text-sm shadow-sm transition-all"
           placeholder="Search fields by name or crop type..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
+        <button 
+          className="absolute inset-y-0 right-1.5 my-1.5 px-2.5 flex items-center justify-center text-gray-400 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+          title="Filter options"
+        >
+          <Filter size={18} />
+        </button>
       </div>
 
       {/* Fields Grid */}
@@ -182,7 +185,7 @@ export default function FieldManager() {
                   <span className="text-xs font-semibold text-gray-500 gap-1.5 uppercase tracking-widest">
                     <Activity size={14} />
                   </span>
-                  <span className="text-sm font-bold text-gray-900">{field.health}/100</span>
+                  <span className="text-sm font-semibold text-gray-900">{field.health}/100</span>
                 </div>
                 <div className="w-full bg-gray-100 rounded-full h-2 overflow-hidden">
                   <div className={`h-2 rounded-full ${getHealthColor(field.health)}`} style={{ width: `${field.health}%` }}></div>
@@ -208,27 +211,24 @@ export default function FieldManager() {
                 </div>
               </div>
 
-              {/* Last Scan & Stage notes */}
-              <div className="text-[11px] text-gray-500 flex justify-between items-center bg-white mt-auto pt-2">
-                <span className="flex items-center gap-1">
-                  <Scan size={12} /> Last scan: {field.lastScan}
-                </span>
-                {field.stage && (
+              {/* Stage notes (if any) */}
+              {field.stage && (
+                <div className="text-[11px] text-gray-500 flex justify-end items-center bg-white mt-auto pt-2">
                   <span className="font-medium text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded">
                     {field.stage}
                   </span>
-                )}
-              </div>
+                </div>
+              )}
             </div>
 
             {/* Card Actions */}
-            <div className="border-t border-gray-100 p-3 bg-gray-50/50 grid grid-cols-2 gap-2">
+            <div className="border-t border-gray-100 p-3 bg-gray-50/50 grid grid-cols-2 gap-2 items-center">
               <button className="w-full py-2 text-xs font-medium text-gray-600 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 hover:text-gray-900 transition-colors flex items-center justify-center gap-1.5 shadow-sm">
                 <Scan size={14} /> Run AI Scan
               </button>
-              <button className="w-full py-2 text-xs font-medium text-white bg-gray-900 rounded-lg hover:bg-gray-800 transition-colors flex items-center justify-center gap-1.5 shadow-sm">
-                View Details <ChevronRight size={14} />
-              </button>
+              <div className="flex items-center justify-center gap-1 text-[11px] text-gray-500 font-medium w-full h-full">
+                Last scan: {field.lastScan}
+              </div>
             </div>
 
           </div>

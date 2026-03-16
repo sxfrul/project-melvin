@@ -185,7 +185,7 @@ const AnalysisCard = ({ onComplete }: { onComplete?: () => void }) => {
       </div>
       
       <div className="mb-4">
-        <p className="text-[12px] lg:text-[13px] text-gray-700 leading-relaxed">
+        <p className="text-base lg:text-base text-gray-700 leading-relaxed">
           <Typewriter 
             prefix="Detailed Report:" 
             text="The submitted image exhibits large, elliptical, grayish-green to tan lesions on the leaves, highly characteristic of Exserohilum turcicum infection. Structural comparison against the healthy baseline indicates an approximate 28% affected leaf area."
@@ -200,7 +200,7 @@ const AnalysisCard = ({ onComplete }: { onComplete?: () => void }) => {
         <ul className="space-y-3">
           <li className={`flex items-start gap-2.5 transition-opacity duration-300 ${step >= 1 ? 'opacity-100' : 'hidden'}`}>
             <div className="w-1.5 h-1.5 bg-indigo-500 rounded-full mt-1.5 flex-shrink-0"></div>
-            <span className="text-[12px] lg:text-[13px] text-gray-600 leading-relaxed">
+            <span className="text-base lg:text-base text-gray-600 leading-relaxed">
               {step >= 1 && (
                 <Typewriter
                   prefix="Immediate Action:"
@@ -214,7 +214,7 @@ const AnalysisCard = ({ onComplete }: { onComplete?: () => void }) => {
           </li>
           <li className={`flex items-start gap-2.5 transition-opacity duration-300 ${step >= 2 ? 'opacity-100' : 'hidden'}`}>
             <div className="w-1.5 h-1.5 bg-indigo-500 rounded-full mt-1.5 flex-shrink-0"></div>
-            <span className="text-[12px] lg:text-[13px] text-gray-600 leading-relaxed">
+            <span className="text-base lg:text-base text-gray-600 leading-relaxed">
               {step >= 2 && (
                 <Typewriter
                   prefix="Cultural Practice:"

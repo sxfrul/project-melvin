@@ -78,7 +78,7 @@ const MainLayout = () => {
           <div className="flex space-x-1">
             <NavLink to="/dashboard" className={mobileLinkClasses}><LayoutDashboard size={20}/></NavLink>
             <NavLink to="/disease-detection" className={mobileLinkClasses}><Bug size={20}/></NavLink>
-            <NavLink to="/growth-tracker" className={mobileLinkClasses}><Sprout size={20}/></NavLink>
+            <NavLink to="/field-manager" className={mobileLinkClasses}><Sprout size={20}/></NavLink>
           </div>
         </header>
 
