@@ -2,7 +2,6 @@ import { useState, useRef, useEffect } from 'react';
 import { 
   ShieldAlert, 
   Send, 
-  Bot, 
   Image as ImageIcon, 
   Paperclip, 
   MessageSquare, 
@@ -13,6 +12,7 @@ import {
   Loader2,
   Link2
 } from 'lucide-react';
+import melvinLogo from '../assets/melvin-logo.jpg';
 
 // --- Mock Data for Chat History ---
 const chatHistory = [
@@ -162,7 +162,7 @@ const AnalysisCard = () => (
             <ShieldAlert className="text-red-600 w-4 h-4" />
         </div>
         <div>
-          <h4 className="text-[13px] lg:text-sm font-semibold text-gray-900 tracking-tight">Northern Corn Leaf Blight detected</h4>
+          <h4 className="text-[13px] lg:text-sm font-semibold text-gray-900 tracking-tight">Corn Leaf Blight detected</h4>
           <p className="text-[11px] lg:text-xs text-red-600 mt-1 font-medium flex items-center gap-1.5">
             Critical Severity <span className="w-1 h-1 bg-red-600 rounded-full"></span> Confidence: 94.2%
           </p>
@@ -195,7 +195,7 @@ const AnalysisCard = () => (
     {/* In-chat Action Buttons */}
     <div className="pt-4 border-t border-gray-100 flex gap-2.5 flex-wrap sm:flex-nowrap">
       <button className="w-full sm:flex-1 px-4 py-2 bg-gray-900 text-white text-xs lg:text-sm rounded-xl hover:bg-gray-800 transition font-medium text-center">
-        Generate Work Order
+        Add to Tasklist
       </button>
       <button className="w-full sm:w-auto px-4 py-2 bg-gray-50 border border-gray-200 text-gray-700 text-xs lg:text-sm rounded-xl hover:bg-gray-100 transition font-medium">
         Save Report
@@ -385,7 +385,13 @@ export default function DiseaseDetection() {
                 {/* BOT MESSAGES */}
                 {msg.sender === 'bot' && (
                   <div className="flex flex-col gap-2.5 items-start max-w-2xl w-full">
-                    <Bot size={26} className="text-indigo-600" />
+                    <div className="w-8 h-8 rounded-full overflow-hidden shadow-sm border border-gray-100">
+                        <img
+                            src={melvinLogo}
+                            alt="Melvin AI"
+                            className="w-full h-full object-cover scale-225 translate-y-4"
+                        />
+                    </div>
                     
                     {msg.type === 'text' && (
                       <p className="text-[13px] lg:text-sm text-gray-800 leading-relaxed text-left">
