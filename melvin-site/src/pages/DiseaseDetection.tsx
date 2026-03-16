@@ -45,13 +45,43 @@ const chatHistory = [
 type Message = {
   id: string;
   sender: 'bot' | 'user';
-  type: 'text' | 'image' | 'loading' | 'analysis';
+  type: 'text' | 'image' | 'loading' | 'analysis' | 'article';
   content?: string;
   fileName?: string;
   fileSize?: string;
 };
 
 // --- Components ---
+
+const Typewriter = ({ prefix, text, delay = 10, onComplete, start = true }: { prefix?: string, text: string, delay?: number, onComplete?: () => void, start?: boolean }) => {
+  const [displayed, setDisplayed] = useState('');
+  const onCompleteRef = useRef(onComplete);
+  
+  useEffect(() => {
+    onCompleteRef.current = onComplete;
+  }, [onComplete]);
+
+  useEffect(() => {
+    if (!start) return;
+    let i = 0;
+    const t = setInterval(() => {
+      setDisplayed(text.substring(0, i + 1));
+      i++;
+      if (i >= text.length) {
+        clearInterval(t);
+        onCompleteRef.current?.();
+      }
+    }, delay);
+    return () => clearInterval(t);
+  }, [text, delay, start]);
+  
+  return (
+    <>
+      {prefix && <strong>{prefix}</strong>} {displayed}
+    </>
+  );
+};
+
 const ScanningAnimation = () => {
   const [phase, setPhase] = useState(0);
   const phases = [
@@ -87,126 +117,159 @@ const ScanningAnimation = () => {
   );
 };
 
-const AnalysisCard = () => (
-  <div className="bg-white border border-gray-200 shadow-sm rounded-2xl p-4 lg:p-5 w-full mt-2 animate-in fade-in slide-in-from-bottom-2 duration-500">
-    
-    {/* Joined Heatmap and Diagnostic Container */}
-    <div className="mb-4 rounded-xl border border-gray-200 overflow-hidden flex flex-col">
+const AnalysisCard = ({ onComplete }: { onComplete?: () => void }) => {
+  const [step, setStep] = useState(0); // 0: report, 1: bullet1, 2: bullet2, 3: done
+
+  return (
+    <div className="bg-white border border-gray-200 shadow-sm rounded-2xl p-4 lg:p-5 w-full mt-2 animate-in fade-in slide-in-from-bottom-2 duration-500 transition-all">
       
-      {/* 1. Leaf Area Heatmap (Top Section - Gray) */}
-      <div className="bg-gray-50 p-4 lg:p-5">
-        <div className="mb-4">
-          <h3 className="text-[13px] lg:text-sm font-semibold text-gray-900 tracking-tight flex items-center gap-1.5">
-            <Map size={16} className="text-indigo-600" /> Leaf Area Heatmap
-          </h3>
-          <p className="text-[11px] lg:text-xs text-gray-500 mt-0.5">Spatial distribution of infection on uploaded visual scan</p>
-        </div>
+      {/* Joined Heatmap and Diagnostic Container */}
+      <div className="mb-4 rounded-xl border border-gray-200 overflow-hidden flex flex-col">
         
-        <div className="flex flex-col md:flex-row gap-4 lg:gap-6 items-stretch">
-          
-          {/* Realistic Heatmap Mockup Container */}
-          <div className="relative w-full md:w-1/2 min-h-[200px] md:min-h-0 bg-gray-900 rounded-lg overflow-hidden flex items-center justify-center bg-[url('https://images.unsplash.com/photo-1618507763251-9ea0a27ef29e?q=80&w=735&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')] bg-cover bg-center">
-            
-            {/* Lighter dark overlay so the leaf veins are clearly visible beneath the heatmap */}
-            <div className="absolute inset-0 bg-black/20"></div>
-
-            {/* Primary Hotspot (Severe concentration) */}
-            <div className="absolute top-[15%] left-[20%] w-36 h-36 bg-[radial-gradient(circle,rgba(239,68,68,0.9)_10%,rgba(245,158,11,0.7)_40%,rgba(34,197,94,0.4)_70%,transparent_100%)] blur-[2px] rounded-full mix-blend-screen"></div>
-            
-            {/* Secondary Hotspot (Spreading area) */}
-            <div className="absolute top-[40%] right-[15%] w-52 h-52 bg-[radial-gradient(circle,rgba(239,68,68,0.8)_15%,rgba(245,158,11,0.6)_45%,rgba(59,130,246,0.3)_80%,transparent_100%)] blur-[4px] rounded-full mix-blend-screen"></div>
-            
-            {/* Tertiary Hotspot (Mild/Early stage) */}
-            <div className="absolute bottom-[15%] left-[45%] w-28 h-28 bg-[radial-gradient(circle,rgba(245,158,11,0.8)_20%,rgba(34,197,94,0.5)_60%,transparent_100%)] blur-[2px] rounded-full mix-blend-screen"></div>
-
-            {/* Analytical Spatial Grid Overlay */}
-            <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.15)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.15)_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none"></div>
-            
-            {/* Coordinate Target Markers */}
-            <div className="absolute top-[25%] left-[28%] w-4 h-4 border border-white/70 shadow-[0_0_4px_rgba(255,255,255,0.5)]"></div>
-            <div className="absolute top-[55%] right-[28%] w-4 h-4 border border-white/70 shadow-[0_0_4px_rgba(255,255,255,0.5)]"></div>
+        {/* 1. Leaf Area Heatmap (Top Section - Gray) */}
+        <div className="bg-gray-50 p-4 lg:p-5">
+          <div className="mb-4">
+            <h3 className="text-[13px] lg:text-sm font-semibold text-gray-900 tracking-tight flex items-center gap-1.5">
+              <Map size={16} className="text-indigo-600" /> Leaf Area Heatmap
+            </h3>
+            <p className="text-[11px] lg:text-xs text-gray-500 mt-0.5">Spatial distribution of infection on uploaded visual scan</p>
           </div>
           
-          <div className="w-full md:w-1/2 flex flex-col justify-between space-y-4">
-            <div>
-              <div className="flex justify-between text-sm mb-1">
-                <span className="font-medium text-gray-700">Total Affected Area</span>
-                <span className="font-bold text-gray-600">28.4%</span>
-              </div>
-              <div className="w-full bg-gray-200 rounded-full h-2">
-                <div className="bg-red-500 h-2 rounded-full" style={{ width: '28.4%' }}></div>
-              </div>
+          <div className="flex flex-col md:flex-row gap-4 lg:gap-6 items-stretch">
+            
+            {/* Realistic Heatmap Mockup Container */}
+            <div className="relative w-full md:w-1/2 min-h-[200px] md:min-h-0 bg-gray-900 rounded-lg overflow-hidden flex items-center justify-center bg-[url('https://images.unsplash.com/photo-1618507763251-9ea0a27ef29e?q=80&w=735&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')] bg-cover bg-center">
+              
+              {/* Lighter dark overlay so the leaf veins are clearly visible beneath the heatmap */}
+              <div className="absolute inset-0 bg-black/20"></div>
+
+              {/* Primary Hotspot (Severe concentration) */}
+              <div className="absolute top-[15%] left-[20%] w-36 h-36 bg-[radial-gradient(circle,rgba(239,68,68,0.9)_10%,rgba(245,158,11,0.7)_40%,rgba(34,197,94,0.4)_70%,transparent_100%)] blur-[2px] rounded-full mix-blend-screen"></div>
+              
+              {/* Secondary Hotspot (Spreading area) */}
+              <div className="absolute top-[40%] right-[15%] w-52 h-52 bg-[radial-gradient(circle,rgba(239,68,68,0.8)_15%,rgba(245,158,11,0.6)_45%,rgba(59,130,246,0.3)_80%,transparent_100%)] blur-[4px] rounded-full mix-blend-screen"></div>
+              
+              {/* Tertiary Hotspot (Mild/Early stage) */}
+              <div className="absolute bottom-[15%] left-[45%] w-28 h-28 bg-[radial-gradient(circle,rgba(245,158,11,0.8)_20%,rgba(34,197,94,0.5)_60%,transparent_100%)] blur-[2px] rounded-full mix-blend-screen"></div>
+
+              {/* Analytical Spatial Grid Overlay */}
+              <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.15)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.15)_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none"></div>
+              
+              {/* Coordinate Target Markers */}
+              <div className="absolute top-[25%] left-[28%] w-4 h-4 border border-white/70 shadow-[0_0_4px_rgba(255,255,255,0.5)]"></div>
+              <div className="absolute top-[55%] right-[28%] w-4 h-4 border border-white/70 shadow-[0_0_4px_rgba(255,255,255,0.5)]"></div>
             </div>
             
-            <div className="grid grid-cols-2 gap-3 lg:gap-4 pt-2">
-              <div className="bg-white p-3 rounded-lg border border-gray-200 shadow-sm">
-                <p className="text-xs text-gray-500 mb-1">High Severity</p>
-                <p className="font-semibold text-gray-900">12.1%</p>
+            <div className="w-full md:w-1/2 flex flex-col justify-between space-y-4">
+              <div>
+                <div className="flex justify-between text-sm mb-1">
+                  <span className="font-medium text-gray-700">Total Affected Area</span>
+                  <span className="font-bold text-gray-600">28.4%</span>
+                </div>
+                <div className="w-full bg-gray-200 rounded-full h-2">
+                  <div className="bg-red-500 h-2 rounded-full" style={{ width: '28.4%' }}></div>
+                </div>
               </div>
-              <div className="bg-white p-3 rounded-lg border border-gray-200 shadow-sm">
-                <p className="text-xs text-gray-500 mb-1">Moderate Severity</p>
-                <p className="font-semibold text-gray-900">16.3%</p>
+              
+              <div className="grid grid-cols-2 gap-3 lg:gap-4 pt-2">
+                <div className="bg-white p-3 rounded-lg border border-gray-200 shadow-sm">
+                  <p className="text-xs text-gray-500 mb-1">High Severity</p>
+                  <p className="font-semibold text-gray-900">12.1%</p>
+                </div>
+                <div className="bg-white p-3 rounded-lg border border-gray-200 shadow-sm">
+                  <p className="text-xs text-gray-500 mb-1">Moderate Severity</p>
+                  <p className="font-semibold text-gray-900">16.3%</p>
+                </div>
               </div>
+              
+              <p className="text-[10px] text-gray-500 italic mt-2 leading-tight">
+                * Heatmap is generated from the uploaded visual field imaging. Red zones indicate high deterioration or blight concentrations.
+              </p>
             </div>
-            
-            <p className="text-[10px] text-gray-500 italic mt-2 leading-tight">
-              * Heatmap is generated from the uploaded visual field imaging. Red zones indicate high deterioration or blight concentrations.
+          </div>
+        </div>
+
+        {/* 2. Diagnostic Card (Bottom Section - Red) */}
+        <div className="bg-red-50 p-3 lg:p-4 border-t border-red-100 flex items-start gap-3">
+          <div className="mt-0.5 p-1.5 bg-red-100 rounded-lg flex-shrink-0">
+              <ShieldAlert className="text-red-600 w-4 h-4" />
+          </div>
+          <div>
+            <h4 className="text-[13px] lg:text-sm font-semibold text-gray-900 tracking-tight">Corn Leaf Blight detected</h4>
+            <p className="text-[11px] lg:text-xs text-red-600 mt-1 font-medium flex items-center gap-1.5">
+              Critical Severity <span className="w-1 h-1 bg-red-600 rounded-full"></span> Confidence: 94.2%
             </p>
           </div>
         </div>
+
+      </div>
+      
+      {/* 3. Detailed Report - Container expands naturally with content */}
+      <div className="mb-4">
+        <p className="text-[12px] lg:text-[13px] text-gray-700 leading-relaxed">
+          <Typewriter 
+            prefix="Detailed Report:" 
+            text="The submitted image exhibits large, elliptical, grayish-green to tan lesions on the leaves, highly characteristic of Exserohilum turcicum infection. Structural comparison against the healthy baseline indicates an approximate 28% affected leaf area."
+            start={true}
+            onComplete={() => setStep(1)}
+            delay={10}
+          />
+        </p>
       </div>
 
-      {/* 2. Diagnostic Card (Bottom Section - Red) */}
-      <div className="bg-red-50 p-3 lg:p-4 border-t border-red-100 flex items-start gap-3">
-        <div className="mt-0.5 p-1.5 bg-red-100 rounded-lg flex-shrink-0">
-            <ShieldAlert className="text-red-600 w-4 h-4" />
-        </div>
-        <div>
-          <h4 className="text-[13px] lg:text-sm font-semibold text-gray-900 tracking-tight">Corn Leaf Blight detected</h4>
-          <p className="text-[11px] lg:text-xs text-red-600 mt-1 font-medium flex items-center gap-1.5">
-            Critical Severity <span className="w-1 h-1 bg-red-600 rounded-full"></span> Confidence: 94.2%
-          </p>
-        </div>
+      {/* 4. Recommendation/Solution Bullet Points - Container expands naturally with content */}
+      <div className="mb-5">
+        <ul className="space-y-3">
+          <li className={`flex items-start gap-2.5 transition-opacity duration-300 ${step >= 1 ? 'opacity-100' : 'hidden'}`}>
+            <div className="w-1.5 h-1.5 bg-indigo-500 rounded-full mt-1.5 flex-shrink-0"></div>
+            <span className="text-[12px] lg:text-[13px] text-gray-600 leading-relaxed">
+              {step >= 1 && (
+                <Typewriter
+                  prefix="Immediate Action:"
+                  text="Apply foliar fungicides containing strobilurins or triazoles to halt the spread within the canopy."
+                  start={step >= 1}
+                  onComplete={() => setStep(2)}
+                  delay={10}
+                />
+              )}
+            </span>
+          </li>
+          <li className={`flex items-start gap-2.5 transition-opacity duration-300 ${step >= 2 ? 'opacity-100' : 'hidden'}`}>
+            <div className="w-1.5 h-1.5 bg-indigo-500 rounded-full mt-1.5 flex-shrink-0"></div>
+            <span className="text-[12px] lg:text-[13px] text-gray-600 leading-relaxed">
+              {step >= 2 && (
+                <Typewriter
+                  prefix="Cultural Practice:"
+                  text="Ensure proper weed management to increase airflow in the canopy, reducing the ambient humidity that fuels fungal growth."
+                  start={step >= 2}
+                  onComplete={() => {
+                    setStep(3);
+                    if(onComplete) onComplete();
+                  }}
+                  delay={10}
+                />
+              )}
+            </span>
+          </li>
+        </ul>
       </div>
 
+      {/* In-chat Action Buttons */}
+      <div className={`pt-4 border-t border-gray-100 flex gap-2.5 flex-wrap sm:flex-nowrap transition-opacity duration-500 ${step >= 3 ? 'opacity-100' : 'opacity-0 hidden'}`}>
+        <button className="w-full sm:flex-1 px-4 py-2 bg-gray-900 text-white text-xs lg:text-sm rounded-xl hover:bg-gray-800 transition font-medium text-center">
+          Add to Tasklist
+        </button>
+        <button className="w-full sm:w-auto px-4 py-2 bg-gray-50 border border-gray-200 text-gray-700 text-xs lg:text-sm rounded-xl hover:bg-gray-100 transition font-medium">
+          Save Report
+        </button>
+      </div>
     </div>
-    
-    {/* 3. Detailed Report */}
-    <div className="mb-4">
-      <p className="text-[12px] lg:text-[13px] text-gray-700 leading-relaxed">
-        <strong>Detailed Report:</strong> The submitted image exhibits large, elliptical, grayish-green to tan lesions on the leaves, highly characteristic of <em>Exserohilum turcicum</em> infection. Structural comparison against the healthy baseline indicates an approximate 28% affected leaf area.
-      </p>
-    </div>
-
-    {/* 4. Recommendation/Solution Bullet Points */}
-    <div className="mb-5">
-      <ul className="space-y-3">
-        <li className="flex items-start gap-2.5">
-          <div className="w-1.5 h-1.5 bg-indigo-500 rounded-full mt-1.5 flex-shrink-0"></div>
-          <span className="text-[12px] lg:text-[13px] text-gray-600 leading-relaxed"><strong>Immediate Action:</strong> Apply foliar fungicides containing strobilurins or triazoles to halt the spread within the canopy.</span>
-        </li>
-        <li className="flex items-start gap-2.5">
-          <div className="w-1.5 h-1.5 bg-indigo-500 rounded-full mt-1.5 flex-shrink-0"></div>
-          <span className="text-[12px] lg:text-[13px] text-gray-600 leading-relaxed"><strong>Cultural Practice:</strong> Ensure proper weed management to increase airflow in the canopy, reducing the ambient humidity that fuels fungal growth.</span>
-        </li>
-      </ul>
-    </div>
-
-    {/* In-chat Action Buttons */}
-    <div className="pt-4 border-t border-gray-100 flex gap-2.5 flex-wrap sm:flex-nowrap">
-      <button className="w-full sm:flex-1 px-4 py-2 bg-gray-900 text-white text-xs lg:text-sm rounded-xl hover:bg-gray-800 transition font-medium text-center">
-        Add to Tasklist
-      </button>
-      <button className="w-full sm:w-auto px-4 py-2 bg-gray-50 border border-gray-200 text-gray-700 text-xs lg:text-sm rounded-xl hover:bg-gray-100 transition font-medium">
-        Save Report
-      </button>
-    </div>
-  </div>
-);
+  );
+};
 
 // Real website mockup using a horizontal open-graph style link preview
 const RelatedArticleCard = () => (
-  <div className="bg-white border border-gray-200 shadow-sm rounded-2xl overflow-hidden mt-3 max-w-[420px] animate-in fade-in slide-in-from-bottom-3 duration-700">
+  <div className="bg-white border border-gray-200 shadow-sm rounded-2xl overflow-hidden mt-2 max-w-[420px] animate-in fade-in slide-in-from-bottom-3 duration-700">
     <div className="px-3 py-2 border-b border-gray-100 flex items-center gap-2 bg-gray-50/80">
       <Link2 size={14} className="text-indigo-500" />
       <span className="text-[10px] font-bold text-gray-600 uppercase tracking-wider">Related Article</span>
@@ -246,6 +309,36 @@ const RelatedArticleCard = () => (
   </div>
 );
 
+const AnalysisMessageContent = ({ onShowArticleClicked }: { onShowArticleClicked: () => void }) => {
+  const [typingDone, setTypingDone] = useState(false);
+  const [chipClicked, setChipClicked] = useState(false);
+
+  const handleChipClick = () => {
+    setChipClicked(true);
+    onShowArticleClicked();
+  };
+
+  return (
+    <div className="w-full flex flex-col items-start">
+      <p className="text-[13px] lg:text-sm text-gray-800 leading-relaxed text-left mb-3">
+        Scan complete. I've analyzed the leaf image. Here is the detailed diagnostic report:
+      </p>
+      <AnalysisCard onComplete={() => setTypingDone(true)} />
+      
+      {typingDone && !chipClicked && (
+        <div className="mt-3 animate-in fade-in duration-500">
+          <button 
+            onClick={handleChipClick}
+            className="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-gray-200 text-gray-600 shadow-sm rounded-full text-[11px] lg:text-xs font-medium hover:border-indigo-300 hover:text-indigo-700 transition-colors"
+          >
+            <Link2 size={14} /> Show Related Articles
+          </button>
+        </div>
+      )}
+    </div>
+  );
+};
+
 export default function DiseaseDetection() {
   const [isHistoryOpen, setIsHistoryOpen] = useState(() => {
     if (typeof window !== 'undefined') {
@@ -269,7 +362,11 @@ export default function DiseaseDetection() {
 
   // Auto-scroll to bottom of chat
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    // Adding a slight delay to ensure dynamic content expansion gets scrolled into view
+    const timer = setTimeout(() => {
+      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }, 100);
+    return () => clearTimeout(timer);
   }, [messages]);
 
   // Image Upload Handler
@@ -350,6 +447,31 @@ export default function DiseaseDetection() {
     }, 1000);
   };
 
+  const handleShowArticle = () => {
+    // 1. Send user message
+    setMessages(prev => [
+      ...prev,
+      {
+        id: Date.now().toString(),
+        sender: 'user',
+        type: 'text',
+        content: 'Show Related Articles'
+      }
+    ]);
+
+    // 2. Respond with the bot's article card message
+    setTimeout(() => {
+      setMessages(prev => [
+        ...prev,
+        {
+          id: (Date.now() + 1).toString(),
+          sender: 'bot',
+          type: 'article'
+        }
+      ]);
+    }, 600);
+  };
+
   return (
     <div className="flex flex-row relative overflow-hidden h-[calc(100vh-4.5rem)] md:h-screen -mx-4 sm:-mx-6 md:-mx-8 lg:-mx-10 -my-4 sm:-my-6 md:-my-8 lg:-my-8">
       
@@ -404,11 +526,14 @@ export default function DiseaseDetection() {
                     )}
                     
                     {msg.type === 'analysis' && (
-                      <div className="w-full">
-                        <p className="text-[13px] lg:text-sm text-gray-800 leading-relaxed text-left mb-3">
-                          Scan complete. I've analyzed the leaf image. Here is the detailed diagnostic report:
+                      <AnalysisMessageContent onShowArticleClicked={handleShowArticle} />
+                    )}
+
+                    {msg.type === 'article' && (
+                      <div className="w-full flex flex-col items-start animate-in fade-in slide-in-from-bottom-2 duration-500">
+                        <p className="text-[13px] lg:text-sm text-gray-800 leading-relaxed text-left mb-1">
+                          Here is a resource with comprehensive information regarding the detected disease:
                         </p>
-                        <AnalysisCard />
                         <RelatedArticleCard />
                       </div>
                     )}
@@ -431,7 +556,7 @@ export default function DiseaseDetection() {
                     )}
                     
                     {msg.type === 'text' && msg.content && (
-                      <div className="bg-gray-100 border border-gray-200/60 px-4 py-2.5 rounded-2xl rounded-tr-sm max-w-lg">
+                      <div className="bg-gray-100 border border-gray-200/60 px-4 py-2.5 rounded-2xl rounded-tr-sm max-w-lg animate-in fade-in slide-in-from-right-2 duration-300">
                         <p className="text-[13px] lg:text-sm text-gray-800 leading-relaxed text-left">
                           {msg.content}
                         </p>
@@ -507,7 +632,7 @@ export default function DiseaseDetection() {
               </button>
             </div>
             <p className="text-center text-[10px] text-gray-400 font-medium px-4">
-              Melvin AI analyzes visual and historical data. Verify critical actions with your field agronomist.
+              Melvin is AI and can make mistakes.
             </p>
           </div>
         </div>
