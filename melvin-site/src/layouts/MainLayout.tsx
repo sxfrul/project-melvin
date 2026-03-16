@@ -21,7 +21,7 @@ const MainLayout = () => {
     }`;
 
   return (
-    <div className="min-h-screen flex bg-[#f5f5f7] font-sans text-gray-900 selection:bg-gray-200">
+    <div className="h-[100dvh] flex bg-[#f5f5f7] font-sans text-gray-900 selection:bg-gray-200">
       
       {/* macOS Style Sidebar (Frosted Glass) */}
       <aside className="w-64 bg-white/60 backdrop-blur-xl border-r border-gray-200/60 hidden md:flex flex-col z-10 flex-shrink-0">
@@ -53,15 +53,15 @@ const MainLayout = () => {
              <div className="w-full h-full bg-gradient-to-tr from-gray-300 to-gray-100"></div>
            </div>
            <div className="flex-col flex">
-             <span className="text-sm font-medium text-gray-900 leading-tight">Farm Admin</span>
-             <span className="text-xs text-gray-500">Premium Plan</span>
+             <span className="text-sm font-medium text-gray-900 leading-tight">Demo Access</span>
+             <span className="text-xs text-gray-500">MyAI FutureHack</span>
            </div>
         </div>
       </aside>
 
       {/* Main Content Area */}
       {/* 1. Changed to handle the scrolling: removed flex-col and overflow-hidden, added overflow-y-auto */}
-      <main className="flex-1 h-screen overflow-y-auto min-w-0">
+      <main className="flex-1 h-full overflow-y-auto min-w-0">
         
         {/* Transparent Mobile Header - FIXED WITH FROSTED GLASS */}
         <header
