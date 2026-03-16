@@ -88,20 +88,6 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Metric 2 */}
-        {/* <div className="snap-center rounded-2xl border border-gray-200/60 bg-white shadow-sm hover:shadow-md transition-shadow p-4 lg:p-5 flex flex-col justify-between">
-          <div className="flex flex-row items-center justify-between mb-3 lg:mb-4">
-            <h3 className="text-xs lg:text-sm font-medium text-gray-500 tracking-tight">Actionable Alerts</h3>
-            <div className="w-7 h-7 lg:w-8 lg:h-8 bg-red-50 rounded-lg flex items-center justify-center flex-shrink-0">
-              <AlertTriangle className="w-3.5 h-3.5 lg:w-4 lg:h-4 text-red-600" />
-            </div>
-          </div>
-          <div>
-            <div className="text-2xl lg:text-3xl font-semibold text-gray-900 tracking-tight">7</div>
-            <p className="text-[11px] lg:text-xs text-gray-600 mt-1 lg:mt-2 font-medium">Requires attention</p>
-          </div>
-        </div> */}
-
         {/* Metric 3 */}
         <div className="snap-center rounded-2xl border border-gray-200/60 bg-white shadow-sm hover:shadow-md transition-shadow p-4 lg:p-5 flex flex-col justify-between">
           <div className="flex flex-row items-center justify-between mb-3 lg:mb-4">
@@ -299,15 +285,32 @@ export default function Dashboard() {
           <p className="text-xs lg:text-sm text-gray-500 mt-0.5 lg:mt-1">Spatial distribution of infection on recent visual scans</p>
         </div>
         
-        <div className="flex flex-col md:flex-row gap-4 lg:gap-6 items-center bg-gray-50 p-4 rounded-xl border border-gray-100">
-          <div className="relative w-full md:w-1/2 aspect-video bg-gray-200 rounded-lg overflow-hidden flex items-center justify-center bg-[url('https://images.unsplash.com/photo-1530836369250-ef71a3f5e4ed?q=80&w=800&auto=format&fit=crop')] bg-cover bg-center">
-             {/* Heatmap overlay mockup */}
-             <div className="absolute inset-0 bg-gradient-to-tr from-red-500/40 via-yellow-500/20 to-transparent mix-blend-multiply"></div>
-             <div className="absolute top-1/4 left-1/3 w-16 h-16 bg-red-500/60 rounded-full blur-xl"></div>
-             <div className="absolute top-1/2 right-1/4 w-24 h-24 bg-orange-500/50 rounded-full blur-xl"></div>
+        <div className="flex flex-col md:flex-row gap-4 lg:gap-6 items-stretch bg-gray-50 p-4 rounded-xl border border-gray-100">
+          
+          {/* Realistic Heatmap Mockup Container (Now with a highly visible leaf macro background) */}
+          <div className="relative w-full md:w-1/2 min-h-[200px] md:min-h-0 bg-gray-900 rounded-lg overflow-hidden flex items-center justify-center bg-[url('https://images.unsplash.com/photo-1618507763251-9ea0a27ef29e?q=80&w=735&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')] bg-cover bg-center">
+            
+            {/* Lighter dark overlay so the leaf veins are clearly visible beneath the heatmap */}
+            <div className="absolute inset-0 bg-black/20"></div>
+
+            {/* Primary Hotspot (Severe concentration) */}
+            <div className="absolute top-[15%] left-[20%] w-36 h-36 bg-[radial-gradient(circle,rgba(239,68,68,0.9)_10%,rgba(245,158,11,0.7)_40%,rgba(34,197,94,0.4)_70%,transparent_100%)] blur-[2px] rounded-full mix-blend-screen"></div>
+            
+            {/* Secondary Hotspot (Spreading area) */}
+            <div className="absolute top-[40%] right-[15%] w-52 h-52 bg-[radial-gradient(circle,rgba(239,68,68,0.8)_15%,rgba(245,158,11,0.6)_45%,rgba(59,130,246,0.3)_80%,transparent_100%)] blur-[4px] rounded-full mix-blend-screen"></div>
+            
+            {/* Tertiary Hotspot (Mild/Early stage) */}
+            <div className="absolute bottom-[15%] left-[45%] w-28 h-28 bg-[radial-gradient(circle,rgba(245,158,11,0.8)_20%,rgba(34,197,94,0.5)_60%,transparent_100%)] blur-[2px] rounded-full mix-blend-screen"></div>
+
+            {/* Analytical Spatial Grid Overlay */}
+            <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.15)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.15)_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none"></div>
+            
+            {/* Coordinate Target Markers */}
+            <div className="absolute top-[25%] left-[28%] w-4 h-4 border border-white/70 shadow-[0_0_4px_rgba(255,255,255,0.5)]"></div>
+            <div className="absolute top-[55%] right-[28%] w-4 h-4 border border-white/70 shadow-[0_0_4px_rgba(255,255,255,0.5)]"></div>
           </div>
           
-          <div className="w-full md:w-1/2 space-y-4">
+          <div className="w-full md:w-1/2 flex flex-col justify-between space-y-4">
             <div>
               <div className="flex justify-between text-sm mb-1">
                 <span className="font-medium text-gray-700">Total Affected Area</span>
