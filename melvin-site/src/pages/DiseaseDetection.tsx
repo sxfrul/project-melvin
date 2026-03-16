@@ -462,8 +462,8 @@ export default function DiseaseDetection() {
               <div className="w-16 h-16 rounded-full overflow-hidden shadow-sm border border-gray-100 mb-6 flex-shrink-0">
                  <img src={melvinLogo} alt="Melvin AI" className="w-full h-full object-cover scale-225 translate-y-7" />
               </div>
-              <h1 className="text-3xl lg:text-4xl font-semibold text-gray-800 mb-10 text-center tracking-tight">
-                What can I help with?
+              <h1 className="text-3xl lg:text-4xl font-semibold text-gray-500 mb-10 text-center tracking-tight">
+                How can Melvin help?
               </h1>
             </div>
           ) : (
@@ -483,7 +483,7 @@ export default function DiseaseDetection() {
                       </div>
 
                       {msg.type === 'text' && (
-                        <p className="text-base lg:text-sm text-gray-800 leading-relaxed text-left">
+                        <p className="text-base lg:text-base text-gray-800 leading-relaxed text-left">
                           {msg.content}
                         </p>
                       )}
@@ -498,7 +498,7 @@ export default function DiseaseDetection() {
 
                       {msg.type === 'article' && (
                         <div className="w-full flex flex-col items-start animate-in fade-in slide-in-from-bottom-2 duration-500">
-                          <p className="text-base lg:text-sm text-gray-800 leading-relaxed text-left mb-1">
+                          <p className="text-base lg:text-base text-gray-800 leading-relaxed text-left mb-1">
                             Here is a resource with comprehensive information regarding the detected disease:
                           </p>
                           <RelatedArticleCard />
@@ -523,7 +523,7 @@ export default function DiseaseDetection() {
                       
                       {msg.type === 'text' && msg.content && (
                         <div className="bg-gray-100 border border-gray-200/60 px-4 py-2.5 rounded-2xl rounded-tr-sm max-w-lg animate-in fade-in slide-in-from-right-2 duration-300">
-                          <p className="text-base lg:text-sm text-gray-800 leading-relaxed text-left">
+                          <p className="text-base lg:text-base text-gray-800 leading-relaxed text-left">
                             {msg.content}
                           </p>
                         </div>
@@ -569,7 +569,7 @@ export default function DiseaseDetection() {
                   }
                 }}
                 placeholder="Message Melvin AI..." 
-                className="w-full max-h-32 bg-transparent resize-none outline-none py-3 px-3 text-base lg:text-sm text-gray-900 placeholder-gray-500" 
+                className="w-full max-h-32 bg-transparent resize-none outline-none py-3 px-3 text-base lg:text-base text-gray-900 placeholder-gray-500" 
                 rows={1} 
               />
               

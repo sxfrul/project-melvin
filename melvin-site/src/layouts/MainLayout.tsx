@@ -37,12 +37,12 @@ const MainLayout = () => {
           
           <NavLink to="/disease-detection" className={navLinkClasses}>
             <Bug size={18} />
-            <span>Disease Detect</span>
+            <span>Chat with Melvin</span>
           </NavLink>
           
           <NavLink to="/growth-tracker" className={navLinkClasses}>
             <Sprout size={18} />
-            <span>Growth Tracker</span>
+            <span>Field Manager</span>
           </NavLink>
         </nav>
         
