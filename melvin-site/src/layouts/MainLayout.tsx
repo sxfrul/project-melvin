@@ -1,4 +1,4 @@
-import { NavLink, Outlet } from 'react-router-dom';
+import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import { LayoutDashboard, Bug, Sprout } from 'lucide-react';
 import melvinLogo from '../assets/melvin-textlogo.png';
 
@@ -19,6 +19,9 @@ const MainLayout = () => {
         ? 'bg-gray-200/60 text-gray-900' 
         : 'text-gray-500 hover:bg-gray-100/60'
     }`;
+
+  const location = useLocation();
+  const isDiseaseDetection = location.pathname === '/disease-detection';
 
   return (
     <div className="h-[100dvh] flex bg-[#f5f5f7] font-sans text-gray-900 selection:bg-gray-200">
@@ -61,11 +64,11 @@ const MainLayout = () => {
 
       {/* Main Content Area */}
       {/* 1. Changed to handle the scrolling: removed flex-col and overflow-hidden, added overflow-y-auto */}
-      <main className="flex-1 h-full overflow-y-auto min-w-0">
+      <main className={`flex-1 h-full min-w-0 flex flex-col ${isDiseaseDetection ? 'overflow-hidden' : 'overflow-y-auto'}`}>
         
         {/* Transparent Mobile Header - FIXED WITH FROSTED GLASS */}
         <header
-          className="md:hidden border-b border-gray-200/100 p-4 flex justify-between items-center sticky top-0 z-20"
+          className="md:hidden border-b border-gray-200/100 p-4 flex justify-between items-center sticky top-0 z-20 flex-shrink-0"
           style={{
             backgroundColor: 'rgba(245, 245, 247, 0.6)',
             backdropFilter: 'blur(20px) saturate(180%)',
@@ -84,10 +87,10 @@ const MainLayout = () => {
 
         {/* Dynamic Page Content */}
         {/* 2. Removed flex-1 and overflow-y-auto since <main> now handles the scrolling */}
-        <div className="p-4 sm:p-6 md:p-8 lg:px-10 lg:py-8">
-          <div className="w-full h-full flex flex-col">
+        <div className={isDiseaseDetection ? "w-full flex-1 flex flex-col min-h-0 relative" : "p-4 sm:p-6 md:p-8 lg:px-10 lg:py-8"}>
+          <div className="w-full h-full flex flex-col min-h-0">
             {/* Page Content Rendered Here */}
-            <div className="w-full flex-1">
+            <div className="w-full flex-1 flex flex-col min-h-0">
               <Outlet />
             </div>
           </div>

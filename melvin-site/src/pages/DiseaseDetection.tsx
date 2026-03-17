@@ -454,91 +454,9 @@ export default function DiseaseDetection() {
   };
 
   return (
-    <div className="flex flex-row relative overflow-hidden h-[calc(100dvh-4.5rem)] md:h-[100dvh] -mx-4 sm:-mx-6 md:-mx-8 lg:-mx-10 -my-4 sm:-my-6 md:-my-8 lg:-my-8 bg-[#f9f9fb]">
+    <div className="flex flex-row relative overflow-hidden h-full w-full bg-transparent">
       
-      {/* Pre-setup Modal Overlay (Flush & Dark Themed) */}
-      {!selectedField && (
-        <div className="absolute inset-0 z-[60] flex items-center justify-center bg-gray-950/60 backdrop-blur-md animate-in fade-in duration-300">
-          <div className="w-full max-w-md mx-4 p-6 lg:p-8 animate-in zoom-in-95 duration-300">
-            <div className="flex items-center gap-3 mb-2">
-              <div className="p-2 bg-gray-300/10 text-yellow-400 rounded-xl">
-                <MapPin size={24} />
-              </div>
-              <h2 className="text-2xl font-bold text-white">Select a Field</h2>
-            </div>
-            <p className="text-sm text-gray-300 mb-8">
-              Please select the field related to your diagnostic inquiry to help Melvin contextualize the analysis.
-            </p>
-
-            {!isCreatingField ? (
-              <>
-                <div className="space-y-3 mb-6 max-h-60 overflow-y-auto pr-2 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:bg-white/10 [&::-webkit-scrollbar-track]:bg-transparent">
-                  {fields.map((field) => (
-                    <button
-                      key={field.id}
-                      onClick={() => setSelectedField(field.name)}
-                      className="w-full flex items-center justify-between p-4 rounded-xl border border-white/10 bg-white/5 hover:border-indigo-400/50 hover:bg-indigo-500/10 transition-all group text-left"
-                    >
-                      <span className="font-medium text-gray-200 group-hover:text-white">{field.name}</span>
-                      <ChevronRight size={18} className="text-gray-500 group-hover:text-indigo-400" />
-                    </button>
-                  ))}
-                </div>
-                <button
-                  onClick={() => setIsCreatingField(true)}
-                  className="w-full flex items-center justify-center gap-2 py-4 rounded-xl border-2 border-dashed border-white/10 text-gray-400 hover:border-white/30 hover:text-gray-200 transition-colors font-medium"
-                >
-                  <Plus size={18} />
-                  Create New Field
-                </button>
-              </>
-            ) : (
-              <div className="space-y-5 animate-in slide-in-from-right-4 duration-300">
-                <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">Field Name</label>
-                  <input
-                    type="text"
-                    autoFocus
-                    value={newFieldName}
-                    onChange={(e) => setNewFieldName(e.target.value)}
-                    placeholder="e.g., Sector 4 (Soybeans)"
-                    className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white focus:ring-1 focus:ring-blue-700 focus:outline-none transition-all placeholder:text-gray-300/50"
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter') handleCreateField();
-                    }}
-                  />
-                </div>
-                <div className="flex gap-3">
-                  <button
-                    onClick={() => setIsCreatingField(false)}
-                    className="flex-1 px-4 py-3 rounded-xl border border-white/10 text-gray-300 hover:bg-white/10 font-medium transition-colors"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    onClick={handleCreateField}
-                    disabled={!newFieldName.trim()}
-                    className="flex-1 px-4 py-3 rounded-xl bg-indigo-600 text-white hover:bg-indigo-500 font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed border border-transparent"
-                  >
-                    Create
-                  </button>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
-
-      <div className="absolute top-4 right-0 z-20 xl:hidden">
-        <button 
-          onClick={() => setIsHistoryOpen(true)}
-          className="p-2.5 bg-white/90 backdrop-blur-sm border border-gray-200 border-r-0 shadow-sm rounded-l-xl text-gray-600 flex items-center justify-center transition-all hover:bg-gray-50"
-          title="Open Chat History"
-        >
-          <PanelRight size={20} />
-        </button>
-      </div>
-
+      {/* Main content area spacer */}
       {isHistoryOpen && (
         <div 
           className="fixed inset-0 bg-gray-900/20 backdrop-blur-sm z-40 xl:hidden transition-opacity"
@@ -546,19 +464,92 @@ export default function DiseaseDetection() {
         />
       )}
 
-      <div className={`flex-1 flex flex-col min-w-0 transition-all duration-300 h-full ${isHistoryOpen ? 'xl:pr-2' : 'pr-0'}`}>
+      <div className={`flex-1 flex flex-col min-w-0 transition-all duration-300 h-full ${isHistoryOpen ? 'xl:pr-[260px]' : 'pr-0'}`}>
         
         {/* Main Content Area */}
-        <div className="flex-1 overflow-y-auto overflow-x-hidden px-4 sm:px-6 lg:px-10 pb-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none'] flex flex-col">
+        <div className="flex-1 overflow-y-auto overflow-x-hidden px-4 sm:px-6 lg:px-10 pb-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none'] flex flex-col bg-[#f9f9fb] rounded-tl-2xl">
           
-          {messages.length === 0 ? (
-            // Empty State / Welcome Screen
-            <div className="flex-1 flex flex-col items-center justify-center animate-in fade-in duration-700 max-w-3xl mx-auto w-full py-10">
-              <div className="w-16 h-16 rounded-full overflow-hidden shadow-sm border border-gray-100 mb-6 flex-shrink-0">
+          {!selectedField ? (
+            // Field Selection Screen (Initial State before chat starts)
+            <div className="flex-1 flex flex-col items-center justify-center animate-in fade-in zoom-in-95 duration-700 max-w-lg mx-auto w-full py-10 px-4">
+              <div className="w-16 h-16 rounded-full overflow-hidden shadow-sm border border-gray-100 mb-6 flex-shrink-0 bg-white">
+                 <img src={melvinLogo} alt="Melvin AI" className="w-full h-full object-cover scale-225 translate-y-7" />
+              </div>
+              <h1 className="text-2xl lg:text-3xl font-semibold text-gray-900 mb-3 text-center tracking-tight">
+                Select a Field
+              </h1>
+              <p className="text-sm text-gray-500 mb-8 text-center leading-relaxed">
+                Please select the field related to your diagnostic inquiry to help Melvin contextualize the analysis.
+              </p>
+
+              <div className="w-full bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden text-left mb-10">
+                {!isCreatingField ? (
+                  <>
+                    <div className="max-h-60 overflow-y-auto [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:bg-gray-200 [&::-webkit-scrollbar-track]:bg-transparent divide-y divide-gray-100">
+                      {fields.map((field) => (
+                        <button
+                          key={field.id}
+                          onClick={() => setSelectedField(field.name)}
+                          className="w-full flex items-center justify-between p-4 transition-all group text-left hover:bg-indigo-50/50"
+                        >
+                          <span className="font-medium text-gray-700 group-hover:text-indigo-900">{field.name}</span>
+                          <ChevronRight size={18} className="text-gray-400 group-hover:text-indigo-500 transition-transform group-hover:translate-x-0.5" />
+                        </button>
+                      ))}
+                    </div>
+                    <div className="p-3 bg-gray-50 border-t border-gray-100">
+                      <button
+                        onClick={() => setIsCreatingField(true)}
+                        className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl border border-gray-200 bg-white text-gray-600 hover:text-indigo-700 hover:border-indigo-300 hover:bg-indigo-50 transition-colors font-medium text-sm shadow-sm"
+                      >
+                        <Plus size={16} />
+                        Create New Field
+                      </button>
+                    </div>
+                  </>
+                ) : (
+                  <div className="p-5 space-y-4 animate-in slide-in-from-right-4 duration-300">
+                    <div>
+                      <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-widest mb-2">Field Name</label>
+                      <input
+                        type="text"
+                        autoFocus
+                        value={newFieldName}
+                        onChange={(e) => setNewFieldName(e.target.value)}
+                        placeholder="e.g., Sector 4 (Soybeans)"
+                        className="w-full px-4 py-2.5 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 focus:outline-none transition-all placeholder:text-gray-400 sm:text-sm"
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') handleCreateField();
+                        }}
+                      />
+                    </div>
+                    <div className="flex gap-3 pt-2 border-t border-gray-100 mt-4">
+                      <button
+                        onClick={() => setIsCreatingField(false)}
+                        className="flex-1 px-4 py-2.5 rounded-xl border border-gray-200 text-gray-600 hover:bg-gray-50 font-medium transition-colors text-sm bg-white"
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        onClick={handleCreateField}
+                        disabled={!newFieldName.trim()}
+                        className="flex-1 px-4 py-2.5 rounded-xl bg-indigo-600 text-white hover:bg-indigo-700 font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed border border-transparent shadow-sm text-sm"
+                      >
+                        Create
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          ) : messages.length === 0 ? (
+            // Welcome Screen (After field is selected, but before messages)
+            <div className="flex-1 flex flex-col items-center justify-center animate-in fade-in zoom-in-95 duration-700 max-w-3xl mx-auto w-full py-10">
+              <div className="w-16 h-16 rounded-full overflow-hidden shadow-sm border border-gray-100 mb-6 flex-shrink-0 bg-white">
                  <img src={melvinLogo} alt="Melvin AI" className="w-full h-full object-cover scale-225 translate-y-7" />
               </div>
               <h1 className="text-3xl lg:text-4xl font-semibold text-gray-500 mb-10 text-center tracking-tight">
-                How can Melvin help with {selectedField}?
+                How can Melvin help with <span className="text-gray-900">{selectedField}</span>?
               </h1>
             </div>
           ) : (
@@ -632,111 +623,162 @@ export default function DiseaseDetection() {
           )}
         </div>
 
-        {/* Bottom Input Area */}
-        <div className="flex-none w-full bg-[#f9f9fb] bg-opacity-95 backdrop-blur-sm pt-2 pb-6 lg:pb-8 px-4 sm:px-6 lg:px-10">
-          <div className="max-w-3xl mx-auto w-full flex flex-col gap-3">
-            
-            <div className="relative bg-white border border-gray-200 shadow-sm rounded-[24px] flex items-end p-2 focus-within:ring-4 focus-within:ring-indigo-500/10 focus-within:border-indigo-400 transition-all">
+        {/* Bottom Input Area - Hidden if no field is selected yet */}
+        {selectedField && (
+          <div className="flex-none w-full bg-[#f9f9fb] bg-opacity-100 pt-0 pb-3 lg:pb-4 px-4 sm:px-6 lg:px-10 border-t border-gray-100 animate-in fade-in slide-in-from-bottom-4 duration-700">
+            <div className="max-w-3xl mx-auto w-full flex flex-col gap-1">
               
-              <input 
-                type="file" 
-                ref={fileInputRef} 
-                onChange={handleFileUpload} 
-                className="hidden" 
-                accept="image/*"
-              />
-              
-              <button 
-                onClick={() => fileInputRef.current?.click()}
-                className="p-2.5 text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-full transition-colors mb-0.5 ml-0.5 flex-shrink-0"
-                title="Attach an image"
-                disabled={!selectedField}
-              >
-                <Paperclip size={20} />
-              </button>
-              
-              <textarea 
-                value={inputText}
-                onChange={(e) => setInputText(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' && !e.shiftKey) {
-                    e.preventDefault();
-                    handleTextSubmit();
-                  }
-                }}
-                placeholder="Message Melvin AI..." 
-                className="w-full max-h-32 bg-transparent resize-none outline-none py-3 px-3 text-base lg:text-base text-gray-900 placeholder-gray-500" 
-                rows={1} 
-                disabled={!selectedField}
-              />
-              
-              <button 
-                onClick={() => handleTextSubmit()}
-                className={`p-2.5 rounded-full transition-colors mb-0.5 mr-0.5 flex-shrink-0 shadow-sm ${
-                  inputText.trim() && selectedField ? 'bg-indigo-600 hover:bg-indigo-700 text-white' : 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                }`}
-                disabled={!inputText.trim() || !selectedField}
-              >
-                <Send size={18} />
-              </button>
+              <div className="relative bg-white border border-gray-200 shadow-sm rounded-[24px] flex items-end p-2 focus-within:ring-4 focus-within:ring-indigo-500/10 focus-within:border-indigo-400 transition-all">
+                
+                <input 
+                  type="file" 
+                  ref={fileInputRef} 
+                  onChange={handleFileUpload} 
+                  className="hidden" 
+                  accept="image/*"
+                />
+                
+                <button 
+                  onClick={() => fileInputRef.current?.click()}
+                  className="p-2.5 text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-full transition-colors mb-0.5 ml-0.5 flex-shrink-0"
+                  title="Attach an image"
+                >
+                  <Paperclip size={20} />
+                </button>
+                
+                <textarea 
+                  value={inputText}
+                  onChange={(e) => setInputText(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                      e.preventDefault();
+                      handleTextSubmit();
+                    }
+                  }}
+                  placeholder="Message Melvin AI..." 
+                  className="w-full max-h-32 bg-transparent resize-none outline-none py-3 px-3 text-base lg:text-base text-gray-900 placeholder-gray-500" 
+                  rows={1} 
+                />
+                
+                <button 
+                  onClick={() => handleTextSubmit()}
+                  className={`p-2.5 rounded-full transition-colors mb-0.5 mr-0.5 flex-shrink-0 shadow-sm ${
+                    inputText.trim() ? 'bg-indigo-600 hover:bg-indigo-700 text-white' : 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                  }`}
+                  disabled={!inputText.trim()}
+                >
+                  <Send size={18} />
+                </button>
+              </div>
+              <p className="text-center text-[10px] text-gray-400 mt-0.5 leading-none">
+                Melvin is AI and can make mistakes
+              </p>
             </div>
           </div>
-        </div>
+        )}
       </div>
 
-      <div className="hidden xl:flex flex-col items-center justify-start pt-3 px-1.5 z-10">
+      {/* Closed State Toggle (Visible when sidebar is CLOSED) */}
+      {!isHistoryOpen && (
+        <div className="fixed top-4 right-0 z-10 flex xl:absolute">
+          <button 
+            onClick={() => setIsHistoryOpen(true)}
+            className="p-2.5 bg-white/90 backdrop-blur-sm border border-gray-200 border-r-0 shadow-sm rounded-l-xl text-gray-600 flex items-center justify-center transition-all hover:bg-gray-50 h-[42px] w-[42px] translate-y-[calc(4.5rem+1rem)] md:translate-y-0"
+            title="Show history"
+          >
+            <PanelRight size={20} />
+          </button>
+        </div>
+      )}
+
+      {/* Sidebar Chat History Container */}
+      <div 
+        className={`
+          fixed inset-y-0 right-0 z-50 bg-[#f9f9fb] shadow-2xl transition-transform duration-300 ease-in-out
+          absolute h-full border-l border-gray-200/80
+          ${isHistoryOpen 
+            ? 'translate-x-0 w-[260px]' 
+            : 'translate-x-full w-[260px]'
+          }
+        `}
+      >
+        {/* The Toggle Button ATTACHED to the Sidebar itself */}
         <button 
           onClick={() => setIsHistoryOpen(!isHistoryOpen)}
-          className="p-2 text-gray-400 hover:text-gray-900 hover:bg-gray-200/60 rounded-lg transition-colors"
+          className={`
+            absolute top-4 -left-[41px] p-2.5 bg-[#f9f9fb] border border-gray-200 border-r-0 shadow-[theme(boxShadow.sm),-4px_0_6px_-1px_rgba(0,0,0,0.05)] rounded-l-xl text-gray-600 flex items-center justify-center transition-all hover:bg-gray-100 z-50 h-[42px] w-[42px] translate-y-[calc(4.5rem+1rem)] md:translate-y-0
+            ${isHistoryOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}
+          `}
           title={isHistoryOpen ? "Hide history" : "Show history"}
         >
           <PanelRight size={20} />
         </button>
-      </div>
 
-      {/* Sidebar Chat History */}
-      <div 
-        className={`
-          fixed inset-y-0 right-0 z-50 bg-[#f9f9fb] shadow-2xl transition-transform duration-300 ease-in-out
-          xl:static xl:bg-transparent xl:shadow-none xl:z-auto xl:flex-shrink-0 xl:transition-all xl:overflow-hidden xl:border-l xl:border-gray-200/80
-          ${isHistoryOpen 
-            ? 'translate-x-0 xl:w-64 xl:opacity-100' 
-            : 'translate-x-full xl:translate-x-0 xl:w-0 xl:opacity-0 xl:border-l-0'
-          }
-        `}
-      >
-        <div className="h-full w-64 overflow-y-auto overflow-x-hidden pl-5 pr-4 pb-8 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:bg-gray-200 [&::-webkit-scrollbar-track]:bg-transparent">
+        <div className="h-full w-full flex flex-col pt-6 pb-8">
           
-          <div className="flex justify-between items-start mb-6 mt-6 xl:mt-4">
+          <div className="flex justify-between items-center mb-4 px-5">
             <div>
-              <h3 className="text-sm font-semibold text-gray-900 tracking-tight">Chat History</h3>
-              <p className="text-[11px] text-gray-500 mt-0.5">Past AI diagnostics</p>
+              <h3 className="text-[13px] font-semibold text-gray-900 tracking-tight">Active Field</h3>
             </div>
+            {/* Kept inner close button for ease of access, especially on mobile */}
             <button 
               onClick={() => setIsHistoryOpen(false)}
-              className="xl:hidden p-1.5 text-gray-400 hover:text-gray-900 hover:bg-gray-200/60 rounded-lg transition-colors"
+              className="xl:hidden p-1 text-gray-400 hover:text-gray-900 hover:bg-gray-200/60 rounded-md transition-colors"
             >
-              <X size={18} />
+              <X size={16} />
             </button>
           </div>
 
-          <div className="space-y-6">
+          <div className="px-5 mb-6">
+            <div className="relative">
+              <select 
+                value={selectedField || ''} 
+                onChange={(e) => setSelectedField(e.target.value)}
+                className="w-full appearance-none bg-white border border-gray-200 text-gray-700 text-sm rounded-xl px-4 py-2.5 pr-10 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 shadow-sm transition-all cursor-pointer font-medium"
+              >
+                <option value="" disabled>Select a field...</option>
+                {fields.map(f => (
+                  <option key={f.id} value={f.name}>{f.name}</option>
+                ))}
+              </select>
+              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-500">
+                <ChevronRight size={14} className="rotate-90" />
+              </div>
+            </div>
+            <button 
+              onClick={() => { setSelectedField(null); setIsHistoryOpen(false); }}
+              className="mt-2 w-full flex items-center justify-center gap-1.5 py-2 rounded-lg border border-gray-200 bg-white text-gray-600 hover:text-indigo-700 hover:bg-indigo-50 hover:border-indigo-200 transition-colors text-[11px] font-semibold shadow-sm"
+            >
+              <MapPin size={12} /> Create / Change Field
+            </button>
+          </div>
+
+          <div className="px-5 mb-3 mt-2">
+            <h3 className="text-[13px] font-semibold text-gray-900 tracking-tight">Chat History</h3>
+          </div>
+
+          <div className="flex-1 overflow-y-auto overflow-x-hidden space-y-6 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:bg-gray-200 [&::-webkit-scrollbar-track]:bg-transparent">
             {chatHistory.map((group, idx) => (
               <div key={idx}>
-                <h4 className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-2.5 pl-2">
+                <h4 className="text-[11px] font-medium text-gray-400 mb-1.5 px-5">
                   {group.timeframe}
                 </h4>
-                <ul className="space-y-1">
+                <ul className="space-y-0.5 px-2">
                   {group.sessions.map((session) => (
                     <li key={session.id}>
                       <button 
-                        className={`w-full text-left flex items-center gap-2.5 px-3 py-2.5 rounded-xl transition-all ${
+                        className={`w-full text-left flex items-center gap-2.5 px-3 py-2 rounded-md transition-colors ${
                           session.active 
-                            ? 'bg-white shadow-sm border border-gray-200/60 text-indigo-700 font-medium' 
-                            : 'text-gray-600 hover:bg-gray-100/60 hover:text-gray-900'
+                            ? 'bg-gray-200/70 text-gray-900 font-medium' 
+                            : 'text-gray-600 hover:bg-gray-100/80 hover:text-gray-900'
                         }`}
                       >
-                        <MessageSquare size={14} className={session.active ? 'text-indigo-500 flex-shrink-0' : 'text-gray-400 flex-shrink-0'} />
+                        <MessageSquare 
+                          size={14} 
+                          className={`flex-shrink-0 ${
+                            session.active ? 'text-gray-700' : 'text-gray-400'
+                          }`} 
+                        />
                         <span className="text-[13px] truncate">{session.title}</span>
                       </button>
                     </li>
