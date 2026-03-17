@@ -7,7 +7,6 @@ import {
   Activity, 
   AlertTriangle, 
   Scan, 
-  ChevronRight, 
   Leaf 
 } from 'lucide-react';
 
@@ -99,21 +98,13 @@ export default function FieldManager() {
     <div className="w-full pb-6 lg:pb-0">
       
       {/* Page Header */}
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-6 gap-4">
-        <div>
-          <h1 className="text-2xl lg:text-3xl font-semibold text-gray-900 tracking-tight">Field Manager</h1>
-          <p className="text-xs lg:text-sm text-gray-500 mt-1">Manage and monitor all active agricultural zones</p>
-        </div>
-        
-        <div className="flex items-center gap-3">
-          <button className="flex items-center gap-2 px-4 py-2 bg-green-700 text-white text-sm font-medium rounded-xl hover:bg-indigo-700 transition-colors shadow-sm">
-            <Plus size={16} /> Add Field
-          </button>
-        </div>
+      <div className="mb-6">
+        <h1 className="text-2xl lg:text-3xl font-semibold text-gray-900 tracking-tight">Field Manager</h1>
+        <p className="text-xs lg:text-sm text-gray-500 mt-1">Manage and monitor all active agricultural zones</p>
       </div>
 
-      {/* Summary Stats */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4 mb-6">
+      {/* Summary Stats - Tightened gaps to gap-2 (8px) */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 mb-6">
         <div className="bg-white p-4 rounded-2xl border border-gray-200/60 shadow-sm flex flex-col justify-center">
           <p className="text-xs text-gray-500 font-medium mb-1">Total Active Fields</p>
           <p className="text-2xl font-semibold text-gray-900">5</p>
@@ -126,10 +117,14 @@ export default function FieldManager() {
           <p className="text-xs text-gray-500 font-medium mb-1">Total Coverage</p>
           <p className="text-2xl font-semibold text-gray-900">655<span className="text-sm text-gray-500 font-normal ml-1">ha</span></p>
         </div>
-        <div className="bg-white p-4 rounded-2xl border border-gray-200/60 shadow-sm flex flex-col justify-center">
-          <p className="text-xs text-gray-500 font-medium mb-1">Avg Crop Health</p>
-          <p className="text-2xl font-semibold text-gray-900">78<span className="text-sm text-gray-500 font-normal ml-1">/100</span></p>
-        </div>
+        
+        {/* Add Field Card */}
+        <button className="bg-gray-50/50 p-4 rounded-2xl border-2 border-gray-200 border-dashed hover:border-green-500 hover:bg-green-50/30 shadow-sm flex flex-col items-center justify-center transition-all group min-h-[90px]">
+          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-white border border-gray-200 text-gray-500 group-hover:bg-green-600 group-hover:border-green-600 group-hover:text-white transition-all shadow-sm mb-1.5">
+            <Plus size={18} />
+          </div>
+          <span className="text-sm font-semibold text-gray-600 group-hover:text-green-700 transition-colors">Add New Field</span>
+        </button>
       </div>
 
       {/* Search Bar */}
@@ -153,12 +148,12 @@ export default function FieldManager() {
       </div>
 
       {/* Fields Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 lg:gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3 lg:gap-3 xl:gap-3">
         {filteredFields.map((field) => (
           <div key={field.id} className="bg-white rounded-2xl border border-gray-200/60 shadow-sm hover:shadow-md transition-all flex flex-col overflow-hidden group">
             
             {/* Card Header */}
-            <div className="p-5 border-b border-gray-100 flex items-start bg-gray-50/50">
+            <div className="p-4 border-b border-gray-100 flex items-start bg-gray-50/50">
               <div className="flex items-start gap-3">
                 <div className="w-12 h-12 rounded-lg overflow-hidden flex-shrink-0 border border-gray-200 shadow-sm bg-gray-100">
                   <img src={field.image} alt={field.name} className="w-full h-full object-cover" />
@@ -177,7 +172,7 @@ export default function FieldManager() {
             </div>
 
             {/* Card Body - Metrics */}
-            <div className="p-3 flex-1 flex flex-col gap-5">
+            <div className="p-3 flex-1 flex flex-col gap-4">
               
               {/* Health Index */}
               <div>
@@ -193,7 +188,7 @@ export default function FieldManager() {
               </div>
 
               {/* Status Grid */}
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-2">
                 <div className="bg-gray-50 p-3 rounded-xl border border-gray-100">
                   <span className="text-[11px] text-gray-500 font-medium mb-1 block flex items-center gap-1">
                     <Droplets size={12} className="text-gray-500" /> Moisture
@@ -213,7 +208,7 @@ export default function FieldManager() {
 
               {/* Stage notes (if any) */}
               {field.stage && (
-                <div className="text-[11px] text-gray-500 flex justify-end items-center bg-white mt-auto pt-2">
+                <div className="text-[11px] text-gray-500 flex justify-end items-center bg-white mt-auto pt-1">
                   <span className="font-medium text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded">
                     {field.stage}
                   </span>
