@@ -45,7 +45,7 @@ export default function Dashboard() {
         </div>
 
         {/* Localized Weather Widget */}
-        <div className="flex items-center space-x-4 lg:space-x-4 bg-white rounded-2xl p-3 lg:p-4 border border-gray-200/60 shadow-sm overflow-x-auto [&::-webkit-scrollbar]:hidden">
+        <div className="flex items-center space-x-4 lg:space-x-4 bg-white rounded-lg p-3 lg:p-4 border border-gray-200/60 shadow-sm overflow-x-auto [&::-webkit-scrollbar]:hidden">
           <div className="flex items-center space-x-3 flex-shrink-0">
             <div>
               <p className="text-xs lg:text-sm font-medium text-gray-900 leading-tight">Kuala Lumpur, MY</p>
@@ -76,7 +76,7 @@ export default function Dashboard() {
       <div className="-mr-4 pr-4 sm:-mr-6 sm:pr-6 md:-mr-8 md:pr-8 lg:-mr-10 lg:pr-10 xl:mr-0 xl:pr-0 grid grid-rows-2 grid-flow-col auto-cols-[85%] sm:auto-cols-[45%] md:flex md:flex-row xl:grid xl:grid-rows-1 xl:grid-cols-4 gap-3 lg:gap-4 xl:gap-2 overflow-x-auto snap-x snap-mandatory pb-2 xl:pb-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none'] mb-4 lg:mb-3">
         
         {/* Metric 1 */}
-        <div className="snap-center md:snap-start md:shrink-0 md:w-[280px] lg:w-[320px] xl:w-auto xl:shrink rounded-2xl border border-gray-200/60 bg-white shadow-sm hover:shadow-md transition-shadow p-4 lg:p-5 flex flex-col justify-between">
+        <div className="snap-center md:snap-start md:shrink-0 md:w-[280px] lg:w-[320px] xl:w-auto xl:shrink rounded-lg border border-gray-200/60 bg-white shadow-sm hover:shadow-md transition-shadow p-4 lg:p-5 flex flex-col justify-between">
           <div className="flex flex-row items-center justify-between mb-3 lg:mb-4">
             <h3 className="text-xs lg:text-sm font-medium text-gray-500 tracking-tight">AI Plant Scans (30d)</h3>
             <div className="w-7 h-7 lg:w-8 lg:h-8 bg-indigo-50 rounded-lg flex items-center justify-center flex-shrink-0">
@@ -90,7 +90,7 @@ export default function Dashboard() {
         </div>
 
         {/* Metric 2 */}
-        <div className="snap-center md:snap-start md:shrink-0 md:w-[280px] lg:w-[320px] xl:w-auto xl:shrink rounded-2xl border border-gray-200/60 bg-white shadow-sm hover:shadow-md transition-shadow p-4 lg:p-5 flex flex-col justify-between">
+        <div className="snap-center md:snap-start md:shrink-0 md:w-[280px] lg:w-[320px] xl:w-auto xl:shrink rounded-lg border border-gray-200/60 bg-white shadow-sm hover:shadow-md transition-shadow p-4 lg:p-5 flex flex-col justify-between">
           <div className="flex flex-row items-center justify-between mb-3 lg:mb-4">
             <h3 className="text-xs lg:text-sm font-medium text-gray-500 tracking-tight">Avg Soil Moisture</h3>
             <div className="w-7 h-7 lg:w-8 lg:h-8 bg-blue-50 rounded-lg flex items-center justify-center flex-shrink-0">
@@ -104,7 +104,7 @@ export default function Dashboard() {
         </div>
 
         {/* Metric 3 */}
-        <div className="snap-center md:snap-start md:shrink-0 md:w-[280px] lg:w-[320px] xl:w-auto xl:shrink rounded-2xl border border-gray-200/60 bg-white shadow-sm hover:shadow-md transition-shadow p-4 lg:p-5 flex flex-col justify-between">
+        <div className="snap-center md:snap-start md:shrink-0 md:w-[280px] lg:w-[320px] xl:w-auto xl:shrink rounded-lg border border-gray-200/60 bg-white shadow-sm hover:shadow-md transition-shadow p-4 lg:p-5 flex flex-col justify-between">
           <div className="flex flex-row items-center justify-between mb-3 lg:mb-4">
             <h3 className="text-xs lg:text-sm font-medium text-gray-500 tracking-tight">Crop Health Index</h3>
             <div className="w-7 h-7 lg:w-8 lg:h-8 bg-green-50 rounded-lg flex items-center justify-center flex-shrink-0">
@@ -118,7 +118,7 @@ export default function Dashboard() {
         </div>
 
         {/* Metric 4 */}
-        <div className="snap-center md:snap-start md:shrink-0 md:w-[280px] lg:w-[320px] xl:w-auto xl:shrink rounded-2xl border border-gray-200/60 bg-white shadow-sm hover:shadow-md transition-shadow p-4 lg:p-5 flex flex-col justify-between">
+        <div className="snap-center md:snap-start md:shrink-0 md:w-[280px] lg:w-[320px] xl:w-auto xl:shrink rounded-lg border border-gray-200/60 bg-white shadow-sm hover:shadow-md transition-shadow p-4 lg:p-5 flex flex-col justify-between">
           <div className="flex flex-row items-center justify-between mb-3 lg:mb-4">
             <h3 className="text-xs lg:text-sm font-medium text-gray-500 tracking-tight">Est. Yield Loss</h3>
             <div className="w-7 h-7 lg:w-8 lg:h-8 bg-orange-50 rounded-lg flex items-center justify-center flex-shrink-0">
@@ -137,7 +137,7 @@ export default function Dashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-3 items-stretch">
         
         {/* Yield Area Chart */}
-        <div className="lg:col-span-2 rounded-2xl border border-gray-200/60 bg-white shadow-sm p-4 lg:p-6 flex flex-col">
+        <div className="lg:col-span-2 rounded-lg border border-gray-200/60 bg-white shadow-sm p-4 lg:p-6 flex flex-col">
           <div className="mb-4 lg:mb-6">
             <h3 className="text-base lg:text-lg font-semibold text-gray-900 tracking-tight">Historical Yield Tracking</h3>
             <p className="text-xs lg:text-sm text-gray-500 mt-0.5 lg:mt-1">Measured in tons per hectare</p>
@@ -168,7 +168,7 @@ export default function Dashboard() {
         </div>
 
         {/* AI Scan Results Pie Chart */}
-        <div className="lg:col-span-1 rounded-2xl border border-gray-200/60 bg-white shadow-sm p-4 lg:p-6 flex flex-col">
+        <div className="lg:col-span-1 rounded-lg border border-gray-200/60 bg-white shadow-sm p-4 lg:p-6 flex flex-col">
           <div className="mb-4 lg:mb-6">
             <h3 className="text-base lg:text-lg font-semibold text-gray-900 tracking-tight">AI Scan Results</h3>
             <p className="text-xs lg:text-sm text-gray-500 mt-0.5 lg:mt-1">Distribution of latest field scans</p>
@@ -213,7 +213,7 @@ export default function Dashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-3 mt-4 lg:mt-3">
         
         {/* Affected Fields Table */}
-        <div className="rounded-2xl border border-gray-200/60 bg-white shadow-sm p-4 lg:p-6 flex flex-col">
+        <div className="rounded-lg border border-gray-200/60 bg-white shadow-sm p-4 lg:p-6 flex flex-col">
           <div className="mb-4 lg:mb-6 flex justify-between items-center">
             <div>
               <h3 className="text-base lg:text-lg font-semibold text-gray-900 tracking-tight">Affected Fields Status</h3>
@@ -254,7 +254,7 @@ export default function Dashboard() {
         </div>
 
         {/* Disease Risk per Stage */}
-        <div className="rounded-2xl border border-gray-200/60 bg-white shadow-sm p-4 lg:p-6 flex flex-col">
+        <div className="rounded-lg border border-gray-200/60 bg-white shadow-sm p-4 lg:p-6 flex flex-col">
           <div className="mb-4 lg:mb-6 flex justify-between items-center">
             <div>
               <h3 className="text-base lg:text-lg font-semibold text-gray-900 tracking-tight">Disease Risk by Stage</h3>
@@ -280,7 +280,7 @@ export default function Dashboard() {
       </div>
 
       {/* Heatmap of Affected Leaf Area */}
-      <div className="mt-4 lg:mt-3 rounded-2xl border border-gray-200/60 bg-white shadow-sm p-4 lg:p-6 mb-8">
+      <div className="mt-4 lg:mt-3 rounded-lg border border-gray-200/60 bg-white shadow-sm p-4 lg:p-6 mb-8">
         <div className="mb-4 lg:mb-6">
           <h3 className="text-base lg:text-lg font-semibold text-gray-900 tracking-tight">Leaf Area Heatmap</h3>
           <p className="text-xs lg:text-sm text-gray-500 mt-0.5 lg:mt-1">Spatial distribution of infection on recent visual scans</p>

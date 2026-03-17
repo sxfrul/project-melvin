@@ -479,10 +479,10 @@ export default function DiseaseDetection() {
                 Select a Field
               </h1>
               <p className="text-sm text-gray-500 mb-8 text-center leading-relaxed">
-                Please select the field related to your diagnostic inquiry to help Melvin contextualize the analysis.
+                Please select the field that you need assistance with.
               </p>
 
-              <div className="w-full bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden text-left mb-10">
+              <div className="w-full bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden text-left mb-10">
                 {!isCreatingField ? (
                   <>
                     <div className="max-h-60 overflow-y-auto [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:bg-gray-200 [&::-webkit-scrollbar-track]:bg-transparent divide-y divide-gray-100">
@@ -490,21 +490,21 @@ export default function DiseaseDetection() {
                         <button
                           key={field.id}
                           onClick={() => setSelectedField(field.name)}
-                          className="w-full flex items-center justify-between p-4 transition-all group text-left hover:bg-indigo-50/50"
+                          className="w-full flex items-center justify-between p-4 transition-all group text-left hover:bg-gray-50/50"
                         >
-                          <span className="font-medium text-gray-700 group-hover:text-indigo-900">{field.name}</span>
-                          <ChevronRight size={18} className="text-gray-400 group-hover:text-indigo-500 transition-transform group-hover:translate-x-0.5" />
+                          <span className="font-medium text-gray-700 group-hover:text-gray-900">{field.name}</span>
+                          <ChevronRight size={18} className="text-gray-400 group-hover:text-gray-500 transition-transform group-hover:translate-x-0.5" />
                         </button>
                       ))}
                     </div>
                     <div className="p-3 bg-gray-50 border-t border-gray-100">
-                      <button
+                    <button
                         onClick={() => setIsCreatingField(true)}
-                        className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl border border-gray-200 bg-white text-gray-600 hover:text-indigo-700 hover:border-indigo-300 hover:bg-indigo-50 transition-colors font-medium text-sm shadow-sm"
-                      >
+                        className="w-full sm:flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-gray-900 text-white text-sm lg:text-sm rounded-lg hover:bg-gray-800 transition font-medium text-center"
+                    >
                         <Plus size={16} />
-                        Create New Field
-                      </button>
+                        <span>Create New Field</span>
+                    </button>
                     </div>
                   </>
                 ) : (
@@ -694,7 +694,7 @@ export default function DiseaseDetection() {
       {/* Sidebar Chat History Container */}
       <div 
         className={`
-          fixed inset-y-0 right-0 z-50 bg-[#f9f9fb] shadow-2xl transition-transform duration-300 ease-in-out
+          fixed inset-y-0 right-0 z-50 bg-[#f9f9fb] transition-transform duration-300 ease-in-out
           absolute h-full border-l border-gray-200/80
           ${isHistoryOpen 
             ? 'translate-x-0 w-[260px]' 
@@ -718,7 +718,7 @@ export default function DiseaseDetection() {
           
           <div className="flex justify-between items-center mb-4 px-5">
             <div>
-              <h3 className="text-[13px] font-semibold text-gray-900 tracking-tight">Active Field</h3>
+              <h3 className="text-sm font-semibold text-gray-900 tracking-tight">Active Field</h3>
             </div>
             {/* Kept inner close button for ease of access, especially on mobile */}
             <button 
@@ -754,7 +754,7 @@ export default function DiseaseDetection() {
           </div>
 
           <div className="px-5 mb-3 mt-2">
-            <h3 className="text-[13px] font-semibold text-gray-900 tracking-tight">Chat History</h3>
+            <h3 className="text-sm afont-semibold text-gray-900 tracking-tight">Chat History</h3>
           </div>
 
           <div className="flex-1 overflow-y-auto overflow-x-hidden space-y-6 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:bg-gray-200 [&::-webkit-scrollbar-track]:bg-transparent">
