@@ -22,6 +22,8 @@ const MainLayout = () => {
 
   const location = useLocation();
   const isDiseaseDetection = location.pathname === '/disease-detection';
+  const isFieldManager = location.pathname === '/field-manager';
+  const isFullBleed = isDiseaseDetection || isFieldManager;
 
   return (
     <div className="h-[100dvh] flex bg-[#f5f5f7] font-sans text-gray-900 selection:bg-gray-200">
@@ -64,7 +66,7 @@ const MainLayout = () => {
 
       {/* Main Content Area */}
       {/* 1. Changed to handle the scrolling: removed flex-col and overflow-hidden, added overflow-y-auto */}
-      <main className={`flex-1 h-full min-w-0 flex flex-col ${isDiseaseDetection ? 'overflow-hidden' : 'overflow-y-auto'}`}>
+      <main className={`flex-1 h-full min-w-0 flex flex-col ${isFullBleed ? 'overflow-hidden' : 'overflow-y-auto'}`}>
         
         {/* Transparent Mobile Header - FIXED WITH FROSTED GLASS */}
         <header
@@ -87,7 +89,7 @@ const MainLayout = () => {
 
         {/* Dynamic Page Content */}
         {/* 2. Removed flex-1 and overflow-y-auto since <main> now handles the scrolling */}
-        <div className={isDiseaseDetection ? "w-full flex-1 flex flex-col min-h-0 relative" : "p-4 sm:p-6 md:p-8 lg:px-10 lg:py-8"}>
+        <div className={isFullBleed ? "w-full flex-1 flex flex-col min-h-0 relative" : "p-4 sm:p-6 md:p-8 lg:px-10 lg:py-8"}>
           <div className="w-full h-full flex flex-col min-h-0">
             {/* Page Content Rendered Here */}
             <div className="w-full flex-1 flex flex-col min-h-0">
