@@ -326,8 +326,24 @@ export default function FieldManager() {
               );
             })}
 
+            {/* Skeleton Create Field Plot */}
+            <div 
+              onClick={() => {
+                // Future integration point for creating a field
+                console.log("Create new field skeleton clicked");
+              }}
+              className="relative cursor-pointer w-full max-w-[90px] sm:max-w-[120px] md:max-w-[140px] lg:max-w-[160px] aspect-square rounded-xl transition-all duration-300 hover:-translate-y-2 flex flex-col items-center justify-center border-4 border-dashed border-emerald-800/20 bg-emerald-50/50 hover:bg-emerald-100/60 hover:border-emerald-600/50 hover:shadow-[0_15px_25px_rgba(0,0,0,0.1)] group"
+            >
+              {/* <div className="bg-emerald-200/50 p-3 sm:p-4 rounded-full group-hover:bg-emerald-300/80 transition-colors mb-2">
+                <Plus className="text-emerald-700/70 group-hover:text-emerald-800 w-6 h-6 sm:w-8 sm:h-8 transition-colors" />
+              </div> */}
+              <span className="text-xs sm:text-sm font-semibold text-emerald-800/60 group-hover:text-emerald-800 transition-colors">
+                Empty
+              </span>
+            </div>
+
             {filteredFields.length === 0 && (
-              <div className="col-span-full text-emerald-800/50 font-medium text-center p-8 bg-white/40 rounded-3xl border-2 border-dashed border-emerald-800/20 text-sm">
+              <div className="col-span-full text-emerald-800/50 font-medium text-center p-8 bg-white/40 rounded-3xl border-2 border-dashed border-emerald-800/20 text-sm mt-4">
                 No fields found matching your search.
               </div>
             )}
