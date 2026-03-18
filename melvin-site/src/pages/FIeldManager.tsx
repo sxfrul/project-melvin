@@ -3,14 +3,13 @@ import {
   Search, 
   Filter, 
   Plus, 
-  Droplets, 
   AlertTriangle, 
   Scan, 
   Leaf,
-  Map as MapIcon,
   ArrowLeft,
   ThermometerSun,
-  Target
+  Target,
+  X
 } from 'lucide-react';
 
 // Define the Field type based on your mock data
@@ -27,6 +26,7 @@ interface FieldData {
   trend?: string;
   stage?: string;
   image: string;
+  yieldLoss: string; // Added Yield Loss property
 }
 
 // --- Mock Data derived from Dashboard and DiseaseDetection ---
@@ -42,6 +42,7 @@ const mockFields: FieldData[] = [
     severity: 'Critical', 
     lastScan: '2 hours ago',
     trend: 'down',
+    yieldLoss: '30%',
     image: 'https://images.unsplash.com/photo-1554402100-8d1d9f3dff80?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
   },
   { 
@@ -55,6 +56,7 @@ const mockFields: FieldData[] = [
     severity: 'Moderate', 
     lastScan: '1 day ago',
     trend: 'stable',
+    yieldLoss: '10%',
     image: 'https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&q=80&w=200&h=200'
   },
   { 
@@ -68,6 +70,7 @@ const mockFields: FieldData[] = [
     severity: 'Low', 
     lastScan: '3 days ago',
     trend: 'up',
+    yieldLoss: '5%',
     image: 'https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&q=80&w=200&h=200'
   },
   { 
@@ -81,6 +84,7 @@ const mockFields: FieldData[] = [
     severity: 'Healthy', 
     lastScan: '4 days ago',
     trend: 'up',
+    yieldLoss: 'None',
     image: 'https://images.unsplash.com/photo-1565522734001-f00e62ec8424?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
   },
   { 
@@ -94,6 +98,7 @@ const mockFields: FieldData[] = [
     severity: 'Healthy', 
     lastScan: '1 week ago',
     stage: 'Tillering Stage',
+    yieldLoss: 'None',
     image: 'https://images.unsplash.com/photo-1635372638513-8a960010a0ff?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
   },
 ];
@@ -117,11 +122,11 @@ export default function FieldManager() {
     field.crop.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const getHealthColor = (health: number) => {
-    if (health >= 85) return 'bg-green-500';
-    if (health >= 65) return 'bg-amber-500';
-    if (health >= 50) return 'bg-orange-500';
-    return 'bg-red-500';
+  const getHealthColorText = (health: number) => {
+    if (health >= 85) return 'text-green-600';
+    if (health >= 65) return 'text-amber-600';
+    if (health >= 50) return 'text-orange-600';
+    return 'text-red-600';
   };
 
   const handleSelectField = (field: FieldData) => {
@@ -302,7 +307,6 @@ export default function FieldManager() {
           <div className="absolute inset-0 z-20 flex flex-col md:flex-row overflow-hidden animate-in fade-in duration-300">
             
             {/* --- LEFT SIDE: Interactive 3D Plot Container --- */}
-            {/* Added 'touch-none' to prevent scrolling on mobile devices while panning */}
             <div 
               className={`relative flex flex-col items-center justify-center transition-colors duration-500 w-full md:w-1/2 h-full p-4 md:p-0 overflow-hidden touch-none
                 ${showMobileDetails ? 'hidden md:flex' : 'flex'}
@@ -320,7 +324,7 @@ export default function FieldManager() {
               {/* Desktop Back Button */}
               <button 
                 onClick={(e) => { e.stopPropagation(); handleBackToMap(); }} 
-                className="hidden md:flex absolute top-4 left-4 lg:top-6 lg:left-6 items-center gap-2 px-4 py-2 bg-white/90 hover:bg-white text-gray-700 rounded-xl shadow-md font-medium text-base transition-all hover:scale-105 z-50 border border-gray-200"
+                className="hidden md:flex absolute top-2 left-2 lg:top-2 lg:left-2 items-center gap-2 px-4 py-2 bg-white/90 hover:bg-white text-gray-700 rounded-xl shadow-md font-medium text-base transition-all hover:scale-105 z-50 border border-gray-200"
               >
                 <ArrowLeft size={16} />
                 Back
@@ -373,7 +377,7 @@ export default function FieldManager() {
                       </div>
                   </div>
 
-                  {/* Sibling Badge: Completely decoupled from 3D object to prevent squishing. */}
+                  {/* Sibling Badge */}
                   <div className="absolute -top-4 sm:-top-6 md:-top-8 left-1/2 -translate-x-1/2 z-50 flex items-center justify-center drop-shadow-2xl">
                     {!selectedField.disease || selectedField.disease === 'None' ? (
                       <div className="bg-green-500 text-white w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full shadow-xl animate-bounce border-2 border-white/20 flex items-center justify-center">
@@ -408,7 +412,7 @@ export default function FieldManager() {
               </div>
             )}
 
-            {/* --- RIGHT SIDE: Details Panel (Guaranteed Slide from Right) --- */}
+            {/* --- RIGHT SIDE: Minimalist Details Panel --- */}
             <div className={`
               ${showMobileDetails ? 'flex absolute inset-0' : 'hidden md:flex absolute right-0 top-0 bottom-0 w-1/2'}
               flex-col z-50 bg-white md:bg-white/95 backdrop-blur-md md:border-l md:border-gray-200
@@ -416,76 +420,60 @@ export default function FieldManager() {
               ${isPanelOpen ? 'translate-x-0' : 'translate-x-full'}
             `}>
               
-              <div className="w-full h-full flex flex-col p-4 md:p-6 overflow-y-auto">
+              <div className="w-full h-full flex flex-col p-4 md:p-10 overflow-y-auto">
                 {isDetailReady && (
                   <div className="w-full h-full flex flex-col animate-in fade-in duration-500 fill-mode-forwards">
                     
-                    {/* Mobile Close Details Header */}
-                    <div className="md:hidden flex items-center mb-4">
+                    {/* Header & Mobile Close Button */}
+                    <div className="flex items-center justify-between mb-3">
+                      <h2 className="text-xl font-semibold text-gray-900 tracking-tight">{selectedField.name}</h2>
+                      
                       <button 
                         onClick={handleCloseMobileDetails}
-                        className="flex items-center gap-1.5 text-gray-600 bg-gray-50 px-3 py-1.5 rounded-md border border-gray-200 font-medium text-xs active:bg-gray-100 transition-colors"
+                        className="md:hidden flex items-center justify-center p-2 -mr-2 text-gray-400 bg-transparent hover:bg-gray-100 hover:text-gray-700 rounded-full transition-colors active:bg-gray-200"
+                        title="Close details"
                       >
-                        <ArrowLeft size={14}/> Back to View
+                        <X size={24}/>
                       </button>
                     </div>
 
-                    {/* Header Profile */}
-                    <div className="flex items-center gap-4 mb-4 pb-4 border-b border-gray-100">
-                      <img src={selectedField.image} alt={selectedField.name} className="w-16 h-16 md:w-20 md:h-20 rounded-xl object-cover shadow-sm border border-gray-100" />
-                      <div className="flex-1 min-w-0">
-                        <h2 className="text-lg md:text-xl font-semibold text-gray-900 tracking-tight">{selectedField.name}</h2>
-                        <p className="text-sm text-gray-500 flex items-center gap-1.5 mt-0.5 truncate">
-                          <Leaf size={14} className="text-emerald-500" /> {selectedField.crop} 
-                          <span className="text-gray-300 mx-1">•</span> 
-                          <MapIcon size={14} className="text-gray-400" /> {selectedField.area}
-                        </p>
+                    {/* Sleek Horizontal Table View */}
+                    <div className="flex flex-col w-full">
+                      <div className="flex justify-between items-center py-4 border-b border-gray-100">
+                        <span className="text-sm text-gray-500">Score</span>
+                        <span className={`text-sm font-medium ${getHealthColorText(selectedField.health)}`}>{selectedField.health}%</span>
+                      </div>
+                      <div className="flex justify-between items-center py-4 border-b border-gray-100">
+                        <span className="text-sm text-gray-500">Moisture</span>
+                        <span className="text-sm text-gray-900 font-medium">{selectedField.moisture}%</span>
+                      </div>
+                      <div className="flex justify-between items-center py-4 border-b border-gray-100">
+                        <span className="text-sm text-gray-500">Disease</span>
+                        <span className={`text-sm font-medium ${selectedField.disease === 'None' ? 'text-gray-900' : 'text-red-600'}`}>{selectedField.disease}</span>
+                      </div>
+                      <div className="flex justify-between items-center py-4 border-b border-gray-100">
+                        <span className="text-sm text-gray-500">Crop Type</span>
+                        <span className="text-sm text-gray-900 font-medium">{selectedField.crop}</span>
+                      </div>
+                      <div className="flex justify-between items-center py-4 border-b border-gray-100">
+                        <span className="text-sm text-gray-500">Size</span>
+                        <span className="text-sm text-gray-900 font-medium">{selectedField.area}</span>
+                      </div>
+                      <div className="flex justify-between items-center py-4 border-b border-gray-100">
+                        <span className="text-sm text-gray-500">Yield Loss</span>
+                        <span className={`text-sm font-medium ${selectedField.yieldLoss === 'None' ? 'text-gray-900' : 'text-orange-600'}`}>{selectedField.yieldLoss}</span>
                       </div>
                     </div>
 
-                    {/* Main Health Bar */}
-                    <div className="mb-5">
-                      <div className="flex justify-between items-end mb-1.5">
-                        <span className="text-sm font-medium text-gray-700 flex items-center gap-1">
-                          Health Score
-                        </span> 
-                        <span className="text-base font-semibold text-gray-900">
-                          {selectedField.health}%
-                        </span>
-                      </div>
-                      <div className="w-full bg-gray-100 rounded-full h-2 overflow-hidden">
-                        <div className={`h-full rounded-full ${getHealthColor(selectedField.health)} transition-all duration-1000 ease-out`} style={{ width: `${selectedField.health}%` }}></div>
-                      </div>
-                    </div>
-                    
-                    {/* Vitals Grid */}
-                    <div className="grid grid-cols-2 gap-3 mb-5">
-                      <div className="bg-gray-50 p-4 rounded-xl border border-gray-100">
-                        <span className="text-xs font-medium text-gray-500 uppercase tracking-wider flex items-center gap-1.5 mb-1">
-                          <Droplets size={14} className="text-blue-500"/> Moisture
-                        </span>
-                        <span className="text-lg font-semibold text-gray-900">{selectedField.moisture}%</span>
-                      </div>
-                      
-                      <div className={`p-4 rounded-xl border ${selectedField.disease === 'None' ? 'bg-gray-50 border-gray-100' : 'bg-red-50 border-red-100'}`}>
-                        <span className={`text-xs font-medium uppercase tracking-wider flex items-center gap-1.5 mb-1 ${selectedField.disease === 'None' ? 'text-gray-500' : 'text-red-500'}`}>
-                          <AlertTriangle size={14} className={selectedField.disease === 'None' ? 'text-gray-400' : 'text-red-500'}/> Disease
-                        </span>
-                        <span className={`text-lg font-semibold block leading-tight truncate ${selectedField.disease === 'None' ? 'text-gray-900' : 'text-red-700'}`} title={selectedField.disease}>
-                          {selectedField.disease === 'None' ? 'None' : selectedField.disease}
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Spacer to push actions to bottom */}
+                    {/* Spacer */}
                     <div className="flex-grow"></div>
 
                     {/* Actions & Footer */}
-                    <div className="flex gap-3 mt-auto pt-4 border-t border-gray-50">
-                      <button className="flex-1 flex items-center justify-center gap-2 bg-gray-900 hover:bg-gray-800 text-white py-2.5 rounded-xl font-medium text-sm transition-all shadow-sm active:scale-[0.98]">
+                    <div className="flex gap-3 mt-8 pt-4">
+                      <button className="flex-1 flex items-center justify-center gap-2 bg-gray-900 hover:bg-gray-800 text-white py-3 rounded-xl font-medium text-sm transition-all shadow-sm active:scale-[0.98]">
                         <Scan size={16}/> Scan with Melvin
                       </button>
-                      <button className="p-2.5 bg-white hover:bg-gray-50 text-gray-600 rounded-xl transition-all border border-gray-200 shadow-sm active:scale-[0.98]" title="View History">
+                      <button className="p-3 bg-white hover:bg-gray-50 text-gray-600 rounded-xl transition-all border border-gray-200 shadow-sm active:scale-[0.98]" title="View History">
                         <ThermometerSun size={18} />
                       </button>
                     </div>
