@@ -224,7 +224,7 @@ export default function FieldManager() {
                   </div>
 
                   {/* Floating Name Tag */}
-                  <div className="absolute -bottom-6 bg-white px-3 py-1.5 rounded-full shadow-md text-[11px] font-bold text-gray-800 border-2 border-gray-100 z-20 flex items-center gap-1.5 whitespace-nowrap">
+                  <div className="absolute -bottom-6 bg-white px-3 py-1.5 rounded-full shadow-md text-sm text-gray-800 border-2 border-gray-100 z-20 flex items-center gap-1.5 whitespace-nowrap">
                     {field.name}
                   </div>
 
