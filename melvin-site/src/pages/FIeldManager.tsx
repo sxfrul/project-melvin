@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { 
   Search, 
   Filter, 
@@ -8,8 +8,9 @@ import {
   Leaf,
   ArrowLeft,
   ThermometerSun,
-  Target,
-  X
+  Codepen,
+  X,
+  MousePointerClick
 } from 'lucide-react';
 
 // Define the Field type based on your mock data
@@ -107,6 +108,9 @@ export default function FieldManager() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedField, setSelectedField] = useState<FieldData | null>(null);
   
+  // Instruction overlay state
+  const [showInstruction, setShowInstruction] = useState(true);
+
   // Animation Sequence States
   const [showMobileDetails, setShowMobileDetails] = useState(false);
   const [isPanelOpen, setIsPanelOpen] = useState(false); 
@@ -135,6 +139,9 @@ export default function FieldManager() {
     setIsPanelOpen(false);
     setIsDetailReady(false);
     setPan({ x: 0, y: 0 }); // Reset pan on new selection
+    
+    // Automatically dismiss instructions if they click a field before clicking okay
+    if (showInstruction) setShowInstruction(false);
     
     setTimeout(() => {
       setIsPanelOpen(true);
@@ -255,6 +262,29 @@ export default function FieldManager() {
           }}
         ></div>
 
+        {/* --- ONBOARDING INSTRUCTION TINT --- */}
+        {showInstruction && !selectedField && (
+          <div className="absolute inset-0 z-50 bg-white/75 backdrop-blur-sm flex flex-col items-center justify-center animate-in fade-in duration-500">
+            <div className="flex flex-col items-center text-center px-6 pointer-events-auto">
+              
+              <h3 className="text-xl md:text-2xl xl:text-4xl font-light text-gray-900 mb-3 tracking-wide">
+                Farm Map GUI
+              </h3>
+              
+              <p className="text-gray-700 mb-10 max-w-sm text-sm md:text-base xl:text-lg font-light">
+                Tap on any field to view real-time health metrics, scan data, and crop details.
+              </p>
+              
+              <button 
+                onClick={() => setShowInstruction(false)}
+                className="bg-black px-10 py-3 rounded-full border border-gray-300 text-white hover:border-gray-900 hover:bg-gray-900 hover:text-white transition-all duration-300 font-medium tracking-wide shadow-sm"
+              >
+                Got it!
+              </button>
+            </div>
+          </div>
+        )}
+
         {/* --- VIEW TOGGLE --- */}
         {!selectedField ? (
           /* GRID VIEW */
@@ -337,11 +367,11 @@ export default function FieldManager() {
                   setPan({ x: 0, y: 0 }); 
                 }} 
                 className={`absolute bottom-20 md:bottom-6 right-4 md:right-6 flex items-center justify-center p-3 bg-white hover:bg-gray-50 text-gray-700 rounded-full shadow-lg transition-all duration-300 z-50 border border-gray-200 hover:scale-110
-                  ${isPanned ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'}
+                  ${isPanned ? 'opacity-90 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'}
                 `}
                 title="Recenter View"
               >
-                <Target size={20} />
+                <Codepen size={20} />
               </button>
 
               {/* Pannable Wrapper */}
@@ -353,7 +383,7 @@ export default function FieldManager() {
                 }}
               >
                 {/* Wrapper for 3D Shape and independent Badge */}
-                <div className="relative w-40 h-40 sm:w-56 sm:h-56 md:w-[50%] md:h-auto md:aspect-square flex-shrink-0 flex items-center justify-center perspective-1000 animate-in slide-in-from-left-8 duration-500 max-w-[250px]">
+                <div className="relative w-30 h-30 sm:w-56 sm:h-56 md:w-[50%] md:h-auto md:aspect-square flex-shrink-0 flex items-center justify-center perspective-1000 animate-in slide-in-from-left-8 duration-500 max-w-[250px]">
                   
                   {/* The 3D Plot Object */}
                   <div 

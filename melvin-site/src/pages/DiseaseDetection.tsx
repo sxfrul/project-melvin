@@ -471,7 +471,7 @@ export default function DiseaseDetection() {
           
           {!selectedField ? (
             // Field Selection Screen (Initial State before chat starts)
-            <div className="flex-1 flex flex-col items-center justify-center animate-in fade-in zoom-in-95 duration-700 max-w-lg mx-auto w-full py-10 px-4">
+            <div className="flex-1 flex flex-col items-center justify-center max-w-lg mx-auto w-full py-10 px-4">
               <div className="w-16 h-16 rounded-full overflow-hidden shadow-sm border border-gray-100 mb-6 flex-shrink-0 bg-white">
                  <img src={melvinLogo} alt="Melvin AI" className="w-full h-full object-cover scale-225 translate-y-7" />
               </div>
@@ -544,7 +544,7 @@ export default function DiseaseDetection() {
             </div>
           ) : messages.length === 0 ? (
             // Welcome Screen (After field is selected, but before messages)
-            <div className="flex-1 flex flex-col items-center justify-center animate-in fade-in zoom-in-95 duration-700 max-w-3xl mx-auto w-full py-10">
+            <div className="flex-1 flex flex-col items-center justify-center max-w-3xl mx-auto w-full py-10">
               <div className="w-16 h-16 rounded-full overflow-hidden shadow-sm border border-gray-100 mb-6 flex-shrink-0 bg-white">
                  <img src={melvinLogo} alt="Melvin AI" className="w-full h-full object-cover scale-225 translate-y-7" />
               </div>
@@ -747,9 +747,9 @@ export default function DiseaseDetection() {
             </div>
             <button 
               onClick={() => { setSelectedField(null); setIsHistoryOpen(false); }}
-              className="mt-2 w-full flex items-center justify-center gap-1.5 py-2 rounded-lg border border-gray-200 bg-white text-gray-600 hover:text-indigo-700 hover:bg-indigo-50 hover:border-indigo-200 transition-colors text-[11px] font-semibold shadow-sm"
+              className="mt-2 w-full flex items-center justify-center gap-1.5 py-2 rounded-lg border border-gray-200 bg-white text-gray-600 hover:text-indigo-700 hover:bg-indigo-50 hover:border-indigo-200 transition-colors text-sm shadow-sm"
             >
-              <MapPin size={12} /> Create / Change Field
+              <Plus size={12} /> Create Field
             </button>
           </div>
 
