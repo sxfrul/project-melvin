@@ -41,7 +41,7 @@ export default function Dashboard() {
       <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-4 lg:mb-6 gap-4 lg:gap-3">
         <div>
           <h1 className="text-2xl lg:text-3xl font-semibold text-gray-900 tracking-tight">Overview</h1>
-          <p className="text-xs lg:text-sm text-gray-500 mt-1">Actionable insights for your fields</p>
+          <p className="text-sm text-gray-500 mt-1">Actionable insights for your fields</p>
         </div>
 
         {/* Localized Weather Widget */}
@@ -73,7 +73,7 @@ export default function Dashboard() {
       </div>
 
       {/* Actionable Metrics Cards */}
-      <div className="-mr-4 pr-4 sm:-mr-6 sm:pr-6 md:-mr-8 md:pr-8 lg:-mr-10 lg:pr-10 xl:mr-0 xl:pr-0 grid grid-rows-2 grid-flow-col auto-cols-[85%] sm:auto-cols-[45%] md:flex md:flex-row xl:grid xl:grid-rows-1 xl:grid-cols-4 gap-3 lg:gap-4 xl:gap-2 overflow-x-auto snap-x snap-mandatory pb-2 xl:pb-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none'] mb-4 lg:mb-3">
+      <div className="-mr-4 pr-4 sm:-mr-6 sm:pr-6 md:-mr-8 md:pr-8 lg:-mr-10 lg:pr-10 xl:mr-0 xl:pr-0 grid grid-rows-2 grid-flow-col auto-cols-[85%] sm:auto-cols-[45%] md:flex md:flex-row xl:grid xl:grid-rows-1 xl:grid-cols-4 gap-2 overflow-x-auto snap-x snap-mandatory pb-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none'] mb-2">
         
         {/* Metric 1 */}
         <div className="snap-center md:snap-start md:shrink-0 md:w-[280px] lg:w-[320px] xl:w-auto xl:shrink rounded-lg border border-gray-200/60 bg-white shadow-sm hover:shadow-md transition-shadow p-4 lg:p-5 flex flex-col justify-between">
