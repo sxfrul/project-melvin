@@ -4,7 +4,6 @@ import {
   Filter, 
   Plus, 
   Droplets, 
-  Activity, 
   AlertTriangle, 
   Scan, 
   Leaf,
@@ -113,13 +112,6 @@ export default function FieldManager() {
     if (health >= 65) return 'bg-amber-500';
     if (health >= 50) return 'bg-orange-500';
     return 'bg-red-500';
-  };
-
-  const getHealthTextColor = (health: number) => {
-    if (health >= 85) return 'text-green-600';
-    if (health >= 65) return 'text-amber-600';
-    if (health >= 50) return 'text-orange-600';
-    return 'text-red-600';
   };
 
   const handleSelectField = (field: FieldData) => {
@@ -246,86 +238,91 @@ export default function FieldManager() {
           </div>
         ) : (
           /* 3D FOCUS VIEW */
-          <div className="absolute inset-0 z-20 flex flex-col md:flex-row items-center justify-center p-4 md:p-8 gap-8 md:gap-36 animate-in fade-in duration-300 overflow-hidden md:overflow-y-auto">
+          <div className="absolute inset-0 z-20 flex flex-col md:flex-row animate-in fade-in duration-300 overflow-hidden">
             
-            {/* Desktop Back Button (Hidden on mobile) */}
-            <button 
-              onClick={handleBackToMap} 
-              className="hidden md:flex absolute top-6 left-6 items-center gap-2 px-4 py-2 bg-white/90 hover:bg-white text-gray-700 rounded-xl shadow-md font-medium text-base transition-all hover:scale-105 z-50 border border-gray-200"
-            >
-              <ArrowLeft size={16} />
-              Back
-            </button>
-
-            {/* The 3D Plot Object - modified to slide from right (middle) on desktop */}
-            <div className={`relative w-35 h-35 sm:w-48 sm:h-48 md:w-64 md:h-64 mb-5 md:mb-0 flex-shrink-0 items-center justify-center perspective-1000 animate-in slide-in-from-left-8 md:slide-in-from-right-48 duration-500 md:duration-700 md:ease-out
+            {/* --- LEFT SIDE: 3D Plot Container --- */}
+            {/* On desktop, exactly 50% width. Padding removed so detail card touches borders */}
+            <div className={`relative flex flex-col items-center justify-center transition-all duration-500 flex-1 md:w-1/2 md:flex-none p-4 md:p-0
               ${showMobileDetails ? 'hidden md:flex' : 'flex'}
             `}>
-              <div 
-                style={{ 
-                  transform: 'rotateX(55deg) rotateZ(-45deg)',
-                  transformStyle: 'preserve-3d',
-                  boxShadow: '-15px 15px 0px 0px #5D4037, -25px 25px 30px 5px rgba(0,0,0,0.3)'
-                }}
-                className={`w-full h-full rounded-2xl relative transition-all duration-700
-                  ${selectedField.disease === 'None' ? 'bg-[#795548]' : 'bg-[#8D6E63]'}
-                `}
+              {/* Desktop Back Button */}
+              <button 
+                onClick={handleBackToMap} 
+                className="hidden md:flex absolute top-4 left-4 lg:top-6 lg:left-6 items-center gap-2 px-4 py-2 bg-white/90 hover:bg-white text-gray-700 rounded-xl shadow-md font-medium text-base transition-all hover:scale-105 z-50 border border-gray-200"
               >
-                 {/* 3D Crop Rows */}
-                 <div className="absolute inset-0 flex flex-col justify-evenly px-4 py-4 rounded-2xl overflow-hidden pointer-events-none">
-                    {[...Array(6)].map((_, i) => (
-                      <div 
-                        key={i} 
-                        className={`w-full h-[12%] rounded-full shadow-inner ${selectedField.disease === 'None' ? 'bg-green-500/90 shadow-[0_0_8px_rgba(34,197,94,0.8)]' : 'bg-yellow-600/80'}`}
-                      ></div>
-                    ))}
-                  </div>
+                <ArrowLeft size={16} />
+                Back
+              </button>
 
-                  {/* Marker above the 3D plot */}
-                  <div 
-                    style={{ transform: 'rotateZ(45deg) rotateX(-55deg) translateZ(50px) translateY(-80px)' }}
-                    className="absolute inset-0 flex items-center justify-center pointer-events-none"
-                  >
-                    {!selectedField.disease || selectedField.disease === 'None' ? (
-                      <div className="bg-green-500 text-white p-3 rounded-full shadow-xl animate-bounce">
-                        <Leaf size={24} />
-                      </div>
-                    ) : (
-                      <div className="bg-red-500 text-white p-3 rounded-full shadow-xl animate-bounce">
-                        <AlertTriangle size={24} />
-                      </div>
-                    )}
-                  </div>
+              {/* The 3D Plot Object */}
+              {/* Scaled to exactly 50% width of the leftover left-half space */}
+              <div className="relative w-40 h-40 sm:w-56 sm:h-56 md:w-[50%] md:h-auto md:aspect-square flex-shrink-0 flex items-center justify-center perspective-1000 animate-in slide-in-from-left-8 duration-500 md:duration-700 md:ease-out">
+                <div 
+                  style={{ 
+                    transform: 'rotateX(55deg) rotateZ(-45deg)',
+                    transformStyle: 'preserve-3d',
+                    boxShadow: '-15px 15px 0px 0px #5D4037, -25px 25px 30px 5px rgba(0,0,0,0.3)'
+                  }}
+                  className={`w-full h-full rounded-2xl relative transition-all duration-700
+                    ${selectedField.disease === 'None' ? 'bg-[#795548]' : 'bg-[#8D6E63]'}
+                  `}
+                >
+                   {/* 3D Crop Rows */}
+                   <div className="absolute inset-0 flex flex-col justify-evenly px-4 py-4 rounded-2xl overflow-hidden pointer-events-none">
+                      {[...Array(6)].map((_, i) => (
+                        <div 
+                          key={i} 
+                          className={`w-full h-[12%] rounded-full shadow-inner ${selectedField.disease === 'None' ? 'bg-green-500/90 shadow-[0_0_8px_rgba(34,197,94,0.8)]' : 'bg-yellow-600/80'}`}
+                        ></div>
+                      ))}
+                    </div>
+
+                    {/* Marker above the 3D plot */}
+                    <div 
+                      style={{ transform: 'rotateZ(45deg) rotateX(-55deg) translateZ(50px) translateY(-80px)' }}
+                      className="absolute inset-0 flex items-center justify-center pointer-events-none"
+                    >
+                      {!selectedField.disease || selectedField.disease === 'None' ? (
+                        <div className="bg-green-500 text-white p-3 md:p-4 rounded-full shadow-xl animate-bounce">
+                          <Leaf size={24} className="md:w-8 md:h-8" />
+                        </div>
+                      ) : (
+                        <div className="bg-red-500 text-white p-3 md:p-4 rounded-full shadow-xl animate-bounce">
+                          <AlertTriangle size={24} className="md:w-8 md:h-8" />
+                        </div>
+                      )}
+                    </div>
+                </div>
               </div>
             </div>
 
-            {/* Mobile Action Bar: Map & Details side by side */}
+            {/* --- MOBILE ONLY: Bottom Actions Bar --- */}
             {!showMobileDetails && (
-              <div className="md:hidden absolute bottom-2 left-2 right-2 flex justify-center gap-2 z-30 animate-in slide-in-from-bottom-8">
+              <div className="md:hidden absolute bottom-4 left-4 right-4 flex justify-center gap-3 z-30 animate-in slide-in-from-bottom-8">
                 <button 
                   onClick={handleBackToMap}
-                  className="flex-1 flex items-center justify-center gap-2 bg-white text-gray-700 py-3 rounded-xl shadow-xl border border-gray-200 active:bg-gray-50 transition-all text-sm"
+                  className="flex-1 flex items-center justify-center gap-2 bg-white text-gray-700 py-3 rounded-xl shadow-xl border border-gray-200 active:bg-gray-50 transition-all text-sm font-medium"
                 >
                   <ArrowLeft size={16}/> Back
                 </button>
                 <button 
                   onClick={() => setShowMobileDetails(true)}
-                  className="flex-1 flex items-center justify-center gap-2 bg-black text-white py-3 rounded-xl shadow-xl active:bg-indigo-700 transition-all text-sm"
+                  className="flex-1 flex items-center justify-center gap-2 bg-gray-900 text-white py-3 rounded-xl shadow-xl active:bg-gray-800 transition-all text-sm font-medium"
                 >
                   Details
                 </button>
               </div>
             )}
 
-            {/* Details Panel - Minimalist & Compact */}
+            {/* --- RIGHT SIDE: Details Panel (Exact 50% Split flush to edges) --- */}
             <div className={`
-              ${showMobileDetails ? 'absolute inset-0 z-50 flex flex-col bg-white p-3 sm:p-4 overflow-y-auto animate-in slide-in-from-bottom-8 duration-300' : 'hidden'}
-              md:flex md:flex-col md:relative md:inset-auto md:z-10 md:bg-white md:rounded-xl md:shadow-lg md:border md:border-gray-200 md:p-4 md:w-full md:max-w-[400px] md:flex-shrink-0 md:overflow-visible md:animate-in md:slide-in-from-left-48 md:duration-700 md:ease-out
+              ${showMobileDetails ? 'absolute inset-0 z-50 flex flex-col bg-white p-4 overflow-y-auto animate-in slide-in-from-bottom-8 duration-300' : 'hidden'}
+              md:flex md:flex-col md:w-1/2 md:h-full md:flex-none md:bg-white/95 md:backdrop-blur-md md:border-l md:border-gray-200 md:p-6 lg:p-10 md:animate-in md:slide-in-from-right-12 md:duration-700 md:ease-out
             `}>
               
               <div className="w-full flex flex-col h-full">
                 {/* Mobile Close Details Header */}
-                <div className="md:hidden flex items-center mb-3">
+                <div className="md:hidden flex items-center mb-4">
                   <button 
                     onClick={() => setShowMobileDetails(false)}
                     className="flex items-center gap-1.5 text-gray-600 bg-gray-50 px-3 py-1.5 rounded-md border border-gray-200 font-medium text-xs active:bg-gray-100 transition-colors"
@@ -334,65 +331,68 @@ export default function FieldManager() {
                   </button>
                 </div>
 
-                {/* Header */}
-                <div className="flex items-center gap-3 mb-3 pb-3 border-b border-gray-100">
-                  <img src={selectedField.image} alt={selectedField.name} className="w-20 h-20 rounded-md object-cover shadow-sm border border-gray-200" />
+                {/* Header Profile */}
+                <div className="flex items-center gap-4 md:gap-5 mb-5 md:mb-8 pb-5 border-b border-gray-100">
+                  <img src={selectedField.image} alt={selectedField.name} className="w-20 h-20 md:w-24 md:h-24 rounded-xl object-cover shadow-sm border border-gray-200" />
                   <div className="flex-1 min-w-0">
-                    <h2 className="text-base lg:text-lg font-semibold text-gray-900 tracking-tight">{selectedField.name}</h2>
-                    <p className="text-[11px] text-gray-500 font-medium flex items-center gap-1 mt-0.5 truncate">
-                      <Leaf size={10}/> {selectedField.crop} <span className="text-gray-300 mx-0.5">•</span> <MapIcon size={10}/> {selectedField.area}
+                    <h2 className="text-lg md:text-2xl font-bold text-gray-900 tracking-tight">{selectedField.name}</h2>
+                    <p className="text-xs md:text-sm text-gray-500 font-medium flex items-center gap-1.5 mt-1 truncate">
+                      <Leaf size={12} className="hidden md:block"/><Leaf size={10} className="md:hidden"/> {selectedField.crop} 
+                      <span className="text-gray-300 mx-1">•</span> 
+                      <MapIcon size={12} className="hidden md:block"/><MapIcon size={10} className="md:hidden"/> {selectedField.area}
                     </p>
                   </div>
                 </div>
 
                 {/* Main Health Bar */}
-                <div className="mb-3">
-                  <div className="flex justify-between items-end mb-1">
-                    <span className="text-gray-700 font-medium flex items-center gap-1 text-sm">
+                <div className="mb-6 md:mb-8">
+                  <div className="flex justify-between items-end mb-2">
+                    <span className="text-gray-700 font-medium flex items-center gap-1 text-sm md:text-base">
                       Health Score
                     </span> 
-                    <span className={`text-sm font-bold leading-none text-gray-600`}>
+                    <span className={`text-base md:text-xl font-bold leading-none text-gray-700`}>
                       {selectedField.health}%
                     </span>
                   </div>
-                  <div className="w-full bg-gray-100 rounded-full h-1.5 overflow-hidden">
-                    <div className={`h-1.5 rounded-full ${getHealthColor(selectedField.health)} transition-all duration-1000 ease-out`} style={{ width: `${selectedField.health}%` }}></div>
+                  <div className="w-full bg-gray-100 rounded-full h-2 md:h-2.5 overflow-hidden">
+                    <div className={`h-2 md:h-2.5 rounded-full ${getHealthColor(selectedField.health)} transition-all duration-1000 ease-out`} style={{ width: `${selectedField.health}%` }}></div>
                   </div>
                 </div>
                 
                 {/* Vitals Grid */}
-                <div className="grid grid-cols-2 gap-2 mb-4">
-                  <div className="bg-gray-50 p-2 rounded-lg border border-gray-100">
-                    <span className="text-sm text-gray-400 flex items-center gap-1 mb-0.5">
-                      <Droplets size={10} className="text-gray-500"/> Moisture
+                <div className="grid grid-cols-2 gap-3 md:gap-5 mb-6">
+                  <div className="bg-gray-50 p-3 md:p-5 rounded-xl border border-gray-100 transition-colors hover:border-indigo-100">
+                    <span className="text-sm md:text-base text-gray-400 flex items-center gap-1.5 mb-1 md:mb-2">
+                      <Droplets size={14} className="text-gray-500"/> Moisture
                     </span>
-                    <span className="font-semibold text-gray-900 text-sm">{selectedField.moisture}%</span>
+                    <span className="font-semibold text-gray-900 text-lg md:text-2xl">{selectedField.moisture}%</span>
                   </div>
                   
-                  <div className={`p-2 rounded-lg border ${selectedField.disease === 'None' ? 'bg-gray-50 border-gray-100' : 'bg-red-50/30 border-red-100'}`}>
-                    <span className={`text-sm flex items-center gap-1 mb-0.5 ${selectedField.disease === 'None' ? 'text-gray-400' : 'text-red-500'}`}>
-                      <AlertTriangle size={10}/> Disease
+                  <div className={`p-3 md:p-5 rounded-xl border transition-colors ${selectedField.disease === 'None' ? 'bg-gray-50 border-gray-100 hover:border-green-100' : 'bg-red-50/30 border-red-100 hover:border-red-200'}`}>
+                    <span className={`text-sm md:text-base flex items-center gap-1.5 mb-1 md:mb-2 ${selectedField.disease === 'None' ? 'text-gray-400' : 'text-red-500'}`}>
+                      <AlertTriangle size={14}/> Disease
                     </span>
-                    <span className={`font-semibold text-xs block leading-tight truncate ${selectedField.disease === 'None' ? 'text-gray-700' : 'text-red-700'}`} title={selectedField.disease}>
+                    <span className={`font-semibold text-sm md:text-lg block leading-tight truncate ${selectedField.disease === 'None' ? 'text-gray-700' : 'text-red-700'}`} title={selectedField.disease}>
                       {selectedField.disease === 'None' ? 'None' : selectedField.disease}
                     </span>
                   </div>
                 </div>
 
-                {/* Spacer to push actions to bottom if needed, though compact mostly removes need */}
+                {/* Spacer to push actions to bottom */}
                 <div className="flex-grow"></div>
 
                 {/* Actions & Footer */}
-                <div className="flex gap-2 mt-auto">
-                  <button className="flex-1 flex items-center justify-center gap-1.5 bg-gray-900 hover:bg-gray-800 text-white py-2 rounded-lg font-medium text-base transition-colors shadow-sm">
-                    <Scan size={17}/> Scan with Melvin
+                <div className="flex gap-3 mt-auto pt-4 md:pt-0">
+                  <button className="flex-1 flex items-center justify-center gap-2 bg-gray-900 hover:bg-gray-800 text-white py-3 md:py-3.5 rounded-xl font-medium text-sm md:text-base transition-all shadow-md active:scale-[0.98]">
+                    <Scan size={18}/> Scan with Melvin
                   </button>
-                  <button className="p-2 bg-white hover:bg-gray-50 text-gray-600 rounded-lg transition-colors border border-gray-200 shadow-sm" title="View History">
-                    <ThermometerSun size={17} />
+                  <button className="p-3 md:p-3.5 bg-white hover:bg-gray-50 text-gray-600 rounded-xl transition-all border border-gray-200 shadow-sm active:scale-[0.98]" title="View History">
+                    <ThermometerSun size={18} />
                   </button>
                 </div>
               </div>
             </div>
+            
           </div>
         )}
 
