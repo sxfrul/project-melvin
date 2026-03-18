@@ -144,15 +144,15 @@ export default function FieldManager() {
       {/* Summary Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 mb-3 shrink-0">
         <div className="bg-white p-3 rounded-2xl border border-gray-200/60 shadow-sm flex flex-col justify-center">
-          <p className="text-[11px] text-gray-500 font-medium mb-0.5">Total Active Fields</p>
+          <p className="text-sm text-gray-500 font-medium mb-0.5">Total Active Fields</p>
           <p className="text-xl font-semibold text-gray-900">5</p>
         </div>
         <div className="bg-white p-3 rounded-2xl border border-gray-200/60 shadow-sm flex flex-col justify-center">
-          <p className="text-[11px] text-gray-500 font-medium mb-0.5">Fields at Risk</p>
+          <p className="text-sm text-gray-500 font-medium mb-0.5">Fields at Risk</p>
           <p className="text-xl font-semibold text-gray-900">2</p>
         </div>
         <div className="bg-white p-3 rounded-2xl border border-gray-200/60 shadow-sm flex flex-col justify-center">
-          <p className="text-[11px] text-gray-500 font-medium mb-0.5">Total Coverage</p>
+          <p className="text-sm text-gray-500 font-medium mb-0.5">Total Coverage</p>
           <p className="text-xl font-semibold text-gray-900">655<span className="text-xs text-gray-500 font-normal ml-1">ha</span></p>
         </div>
         
@@ -247,8 +247,7 @@ export default function FieldManager() {
           </div>
         ) : (
           /* 3D FOCUS VIEW */
-          // Removed bg-color and backdrop-blur to let the texture show through perfectly
-          <div className="absolute inset-0 z-20 flex flex-col md:flex-row items-center justify-center p-4 md:p-8 gap-8 md:gap-16 animate-in fade-in duration-300 overflow-hidden md:overflow-y-auto">
+          <div className="absolute inset-0 z-20 flex flex-col md:flex-row items-center justify-center p-4 md:p-8 gap-8 md:gap-36 animate-in fade-in duration-300 overflow-hidden md:overflow-y-auto">
             
             {/* Desktop Back Button (Hidden on mobile) */}
             <button 
@@ -259,8 +258,8 @@ export default function FieldManager() {
               Back to Map
             </button>
 
-            {/* The 3D Plot Object */}
-            <div className={`relative w-35 h-35 sm:w-48 sm:h-48 md:w-64 md:h-64 mb-5 md:mb-0 flex-shrink-0 items-center justify-center perspective-1000 animate-in slide-in-from-left-8 duration-500
+            {/* The 3D Plot Object - modified to slide from right (middle) on desktop */}
+            <div className={`relative w-35 h-35 sm:w-48 sm:h-48 md:w-64 md:h-64 mb-5 md:mb-0 flex-shrink-0 items-center justify-center perspective-1000 animate-in slide-in-from-left-8 md:slide-in-from-right-48 duration-500 md:duration-700 md:ease-out
               ${showMobileDetails ? 'hidden md:flex' : 'flex'}
             `}>
               <div 
@@ -301,8 +300,7 @@ export default function FieldManager() {
               </div>
             </div>
 
-            {/* Mobile Action Bar: Map & Details side by side (Hidden on desktop, or if details are active) */}
-            {/* Adjusted bottom, left, and right margins to tuck closer to the edges */}
+            {/* Mobile Action Bar: Map & Details side by side */}
             {!showMobileDetails && (
               <div className="md:hidden absolute bottom-2 left-2 right-2 flex justify-center gap-2 z-30 animate-in slide-in-from-bottom-8">
                 <button 
@@ -320,10 +318,10 @@ export default function FieldManager() {
               </div>
             )}
 
-            {/* Details Panel */}
+            {/* Details Panel - modified to slide from left (middle) on desktop */}
             <div className={`
               ${showMobileDetails ? 'absolute inset-0 z-50 flex flex-col bg-gray-50/95 backdrop-blur-md p-4 sm:p-6 overflow-y-auto animate-in slide-in-from-bottom-8 duration-300' : 'hidden'}
-              md:flex md:flex-col md:relative md:inset-auto md:z-10 md:bg-white md:rounded-3xl md:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] md:border md:border-gray-100 md:p-6 md:w-full md:max-w-sm md:flex-shrink-0 md:overflow-visible md:animate-in md:slide-in-from-right-8 md:duration-500
+              md:flex md:flex-col md:relative md:inset-auto md:z-10 md:bg-white md:rounded-3xl md:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] md:border md:border-gray-100 md:p-6 md:w-full md:max-w-sm md:flex-shrink-0 md:overflow-visible md:animate-in md:slide-in-from-left-48 md:duration-700 md:ease-out
             `}>
               
               <div className="w-full max-w-sm mx-auto flex flex-col">
