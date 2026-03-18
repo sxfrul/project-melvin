@@ -186,7 +186,7 @@ export default function FieldManager() {
       </div>
 
       {/* Farm Game GUI Area */}
-      <div className="w-full flex-1 relative bg-emerald-50/60 rounded-3xl border-4 border-emerald-900/10 p-4 min-h-0 flex flex-col shadow-inner overflow-hidden">
+      <div className="w-full flex-1 relative bg-emerald-50/60 rounded-2xl border-4 border-emerald-900/10 p-4 min-h-0 flex flex-col shadow-inner overflow-hidden">
         
         {/* Farm Background Texture (Persistent across both views) */}
         <div 
@@ -218,14 +218,13 @@ export default function FieldManager() {
                     {[...Array(5)].map((_, i) => (
                       <div 
                         key={i} 
-                        className={`w-full h-[15%] rounded-full opacity-80 ${isHealthy ? 'bg-green-500 shadow-[0_0_4px_rgba(34,197,94,0.6)]' : 'bg-yellow-600/70'}`}
+                        className={`w-full h-[10%] rounded-full opacity-80 ${isHealthy ? 'bg-green-500 shadow-[0_0_4px_rgba(34,197,94,0.6)]' : 'bg-yellow-600/70'}`}
                       ></div>
                     ))}
                   </div>
 
                   {/* Floating Name Tag */}
-                  <div className="absolute -top-4 bg-white px-3 py-1.5 rounded-full shadow-md text-[11px] font-bold text-gray-800 border-2 border-gray-100 z-20 flex items-center gap-1.5 whitespace-nowrap">
-                    <Leaf size={12} className={isHealthy ? 'text-green-500' : 'text-amber-500'} />
+                  <div className="absolute -bottom-6 bg-white px-3 py-1.5 rounded-full shadow-md text-[11px] font-bold text-gray-800 border-2 border-gray-100 z-20 flex items-center gap-1.5 whitespace-nowrap">
                     {field.name}
                   </div>
 
@@ -252,10 +251,10 @@ export default function FieldManager() {
             {/* Desktop Back Button (Hidden on mobile) */}
             <button 
               onClick={handleBackToMap} 
-              className="hidden md:flex absolute top-6 left-6 items-center gap-2 px-4 py-2 bg-white/90 hover:bg-white text-gray-700 rounded-full shadow-md font-medium text-sm transition-all hover:scale-105 z-50 border border-gray-200"
+              className="hidden md:flex absolute top-6 left-6 items-center gap-2 px-4 py-2 bg-white/90 hover:bg-white text-gray-700 rounded-xl shadow-md font-medium text-base transition-all hover:scale-105 z-50 border border-gray-200"
             >
               <ArrowLeft size={16} />
-              Back to Map
+              Back
             </button>
 
             {/* The 3D Plot Object - modified to slide from right (middle) on desktop */}
@@ -307,7 +306,7 @@ export default function FieldManager() {
                   onClick={handleBackToMap}
                   className="flex-1 flex items-center justify-center gap-2 bg-white text-gray-700 py-3 rounded-xl shadow-xl border border-gray-200 active:bg-gray-50 transition-all text-sm"
                 >
-                  <ArrowLeft size={16}/> Map
+                  <ArrowLeft size={16}/> Back
                 </button>
                 <button 
                   onClick={() => setShowMobileDetails(true)}
@@ -318,80 +317,79 @@ export default function FieldManager() {
               </div>
             )}
 
-            {/* Details Panel - modified to slide from left (middle) on desktop */}
+            {/* Details Panel - Minimalist & Compact */}
             <div className={`
-              ${showMobileDetails ? 'absolute inset-0 z-50 flex flex-col bg-gray-50/95 backdrop-blur-md p-4 sm:p-6 overflow-y-auto animate-in slide-in-from-bottom-8 duration-300' : 'hidden'}
-              md:flex md:flex-col md:relative md:inset-auto md:z-10 md:bg-white md:rounded-3xl md:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] md:border md:border-gray-100 md:p-6 md:w-full md:max-w-sm md:flex-shrink-0 md:overflow-visible md:animate-in md:slide-in-from-left-48 md:duration-700 md:ease-out
+              ${showMobileDetails ? 'absolute inset-0 z-50 flex flex-col bg-white p-3 sm:p-4 overflow-y-auto animate-in slide-in-from-bottom-8 duration-300' : 'hidden'}
+              md:flex md:flex-col md:relative md:inset-auto md:z-10 md:bg-white md:rounded-xl md:shadow-lg md:border md:border-gray-200 md:p-4 md:w-full md:max-w-[400px] md:flex-shrink-0 md:overflow-visible md:animate-in md:slide-in-from-left-48 md:duration-700 md:ease-out
             `}>
               
-              <div className="w-full max-w-sm mx-auto flex flex-col">
+              <div className="w-full flex flex-col h-full">
                 {/* Mobile Close Details Header */}
-                <div className="md:hidden flex items-center mb-6">
+                <div className="md:hidden flex items-center mb-3">
                   <button 
                     onClick={() => setShowMobileDetails(false)}
-                    className="flex items-center gap-2 text-gray-700 bg-white px-4 py-2 rounded-full shadow-sm border border-gray-200 font-medium text-sm active:bg-gray-50"
+                    className="flex items-center gap-1.5 text-gray-600 bg-gray-50 px-3 py-1.5 rounded-md border border-gray-200 font-medium text-xs active:bg-gray-100 transition-colors"
                   >
-                    <ArrowLeft size={16}/> Back to 3D View
+                    <ArrowLeft size={14}/> Back to View
                   </button>
                 </div>
 
                 {/* Header */}
-                <div className="flex items-center gap-4 mb-5 pb-5 border-b border-gray-200 md:border-gray-100">
-                  <img src={selectedField.image} alt={selectedField.name} className="w-16 h-16 rounded-2xl object-cover shadow-sm border border-gray-100" />
-                  <div>
-                    <h2 className="text-xl font-bold text-gray-900 leading-tight">{selectedField.name}</h2>
-                    <p className="text-sm text-gray-500 font-medium flex items-center gap-1.5 mt-0.5">
-                      <Leaf size={12}/> {selectedField.crop} &nbsp;•&nbsp; <MapIcon size={12}/> {selectedField.area}
+                <div className="flex items-center gap-3 mb-3 pb-3 border-b border-gray-100">
+                  <img src={selectedField.image} alt={selectedField.name} className="w-20 h-20 rounded-md object-cover shadow-sm border border-gray-200" />
+                  <div className="flex-1 min-w-0">
+                    <h2 className="text-base lg:text-lg font-semibold text-gray-900 tracking-tight">{selectedField.name}</h2>
+                    <p className="text-[11px] text-gray-500 font-medium flex items-center gap-1 mt-0.5 truncate">
+                      <Leaf size={10}/> {selectedField.crop} <span className="text-gray-300 mx-0.5">•</span> <MapIcon size={10}/> {selectedField.area}
                     </p>
                   </div>
                 </div>
 
                 {/* Main Health Bar */}
-                <div className="mb-6">
-                  <div className="flex justify-between items-end mb-2">
-                    <span className="text-gray-600 font-semibold flex items-center gap-1.5 text-sm">
-                      <Activity size={16} className="text-gray-400"/> Overall Health
+                <div className="mb-3">
+                  <div className="flex justify-between items-end mb-1">
+                    <span className="text-gray-700 font-medium flex items-center gap-1 text-sm">
+                      Health Score
                     </span> 
-                    <span className={`text-lg font-bold ${getHealthTextColor(selectedField.health)}`}>
+                    <span className={`text-sm font-bold leading-none text-gray-600`}>
                       {selectedField.health}%
                     </span>
                   </div>
-                  <div className="w-full bg-gray-200 md:bg-gray-100 rounded-full h-2.5 overflow-hidden shadow-inner">
-                    <div className={`h-2.5 rounded-full ${getHealthColor(selectedField.health)} transition-all duration-1000 ease-out`} style={{ width: `${selectedField.health}%` }}></div>
+                  <div className="w-full bg-gray-100 rounded-full h-1.5 overflow-hidden">
+                    <div className={`h-1.5 rounded-full ${getHealthColor(selectedField.health)} transition-all duration-1000 ease-out`} style={{ width: `${selectedField.health}%` }}></div>
                   </div>
                 </div>
                 
                 {/* Vitals Grid */}
-                <div className="grid grid-cols-2 gap-3 mb-6">
-                  <div className="bg-blue-50/80 md:bg-blue-50/50 p-3 rounded-2xl border border-blue-100/80 md:border-blue-100/50">
-                    <span className="text-[10px] text-blue-500 uppercase font-bold flex items-center gap-1 mb-1"><Droplets size={12}/> Moisture Level</span>
-                    <span className="font-semibold text-gray-800 text-lg">{selectedField.moisture}%</span>
+                <div className="grid grid-cols-2 gap-2 mb-4">
+                  <div className="bg-gray-50 p-2 rounded-lg border border-gray-100">
+                    <span className="text-sm text-gray-400 flex items-center gap-1 mb-0.5">
+                      <Droplets size={10} className="text-blue-500"/> Moisture
+                    </span>
+                    <span className="font-semibold text-gray-900 text-sm">{selectedField.moisture}%</span>
                   </div>
                   
-                  <div className={`p-3 rounded-2xl border ${selectedField.disease === 'None' ? 'bg-green-50/80 md:bg-green-50/50 border-green-100/80 md:border-green-100/50' : 'bg-red-50/80 md:bg-red-50/50 border-red-100/80 md:border-red-100/50'}`}>
-                    <span className={`text-[10px] uppercase font-bold flex items-center gap-1 mb-1 ${selectedField.disease === 'None' ? 'text-green-600' : 'text-red-500'}`}>
-                      <AlertTriangle size={12}/> Disease Status
+                  <div className={`p-2 rounded-lg border ${selectedField.disease === 'None' ? 'bg-green-50/30 border-green-100' : 'bg-red-50/30 border-red-100'}`}>
+                    <span className={`text-sm flex items-center gap-1 mb-0.5 ${selectedField.disease === 'None' ? 'text-green-600' : 'text-red-500'}`}>
+                      <AlertTriangle size={10}/> Disease
                     </span>
-                    <span className={`font-semibold text-sm block leading-tight ${selectedField.disease === 'None' ? 'text-green-700' : 'text-red-700'}`}>
+                    <span className={`font-semibold text-xs block leading-tight truncate ${selectedField.disease === 'None' ? 'text-green-700' : 'text-red-700'}`} title={selectedField.disease}>
                       {selectedField.disease === 'None' ? 'Healthy' : selectedField.disease}
                     </span>
                   </div>
                 </div>
 
+                {/* Spacer to push actions to bottom if needed, though compact mostly removes need */}
+                <div className="flex-grow"></div>
+
                 {/* Actions & Footer */}
-                <div className="flex gap-3">
-                  <button className="flex-1 flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-xl font-semibold text-sm transition-colors shadow-sm shadow-indigo-200">
-                    <Scan size={16}/> Initiate Drone Scan
+                <div className="flex gap-2 mt-auto">
+                  <button className="flex-1 flex items-center justify-center gap-1.5 bg-gray-900 hover:bg-gray-800 text-white py-2 rounded-lg font-medium text-base transition-colors shadow-sm">
+                    <Scan size={17}/> Scan with Melvin
                   </button>
-                  <button className="p-3 bg-white hover:bg-gray-50 md:bg-gray-100 md:hover:bg-gray-200 text-gray-600 rounded-xl transition-colors border border-gray-200" title="Soil History">
-                    <ThermometerSun size={18} />
+                  <button className="p-2 bg-white hover:bg-gray-50 text-gray-600 rounded-lg transition-colors border border-gray-200 shadow-sm" title="View History">
+                    <ThermometerSun size={17} />
                   </button>
-                </div>
-                
-                <div className="mt-4 text-center">
-                  <span className="text-[10px] text-gray-500 md:text-gray-400 font-medium bg-white md:bg-gray-50 border border-gray-200 md:border-transparent px-3 py-1 rounded-full">
-                    Last updated: {selectedField.lastScan}
-                  </span>
                 </div>
               </div>
             </div>
