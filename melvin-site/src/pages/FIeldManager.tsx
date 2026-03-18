@@ -200,7 +200,7 @@ export default function FieldManager() {
         {/* --- VIEW TOGGLE --- */}
         {!selectedField ? (
           /* GRID VIEW */
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8 lg:gap-10 w-full max-w-4xl mx-auto place-items-center content-center h-full relative z-10 py-6 overflow-y-auto custom-scrollbar">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-7 sm:gap-6 md:gap-8 lg:gap-10 w-full max-w-4xl mx-auto place-items-center content-center h-full relative z-10 py-6 overflow-y-auto custom-scrollbar">
             {filteredFields.map((field) => {
               const isHealthy = field.disease === 'None';
               
@@ -364,17 +364,17 @@ export default function FieldManager() {
                 <div className="grid grid-cols-2 gap-2 mb-4">
                   <div className="bg-gray-50 p-2 rounded-lg border border-gray-100">
                     <span className="text-sm text-gray-400 flex items-center gap-1 mb-0.5">
-                      <Droplets size={10} className="text-blue-500"/> Moisture
+                      <Droplets size={10} className="text-gray-500"/> Moisture
                     </span>
                     <span className="font-semibold text-gray-900 text-sm">{selectedField.moisture}%</span>
                   </div>
                   
-                  <div className={`p-2 rounded-lg border ${selectedField.disease === 'None' ? 'bg-green-50/30 border-green-100' : 'bg-red-50/30 border-red-100'}`}>
-                    <span className={`text-sm flex items-center gap-1 mb-0.5 ${selectedField.disease === 'None' ? 'text-green-600' : 'text-red-500'}`}>
+                  <div className={`p-2 rounded-lg border ${selectedField.disease === 'None' ? 'bg-gray-50 border-gray-100' : 'bg-red-50/30 border-red-100'}`}>
+                    <span className={`text-sm flex items-center gap-1 mb-0.5 ${selectedField.disease === 'None' ? 'text-gray-400' : 'text-red-500'}`}>
                       <AlertTriangle size={10}/> Disease
                     </span>
-                    <span className={`font-semibold text-xs block leading-tight truncate ${selectedField.disease === 'None' ? 'text-green-700' : 'text-red-700'}`} title={selectedField.disease}>
-                      {selectedField.disease === 'None' ? 'Healthy' : selectedField.disease}
+                    <span className={`font-semibold text-xs block leading-tight truncate ${selectedField.disease === 'None' ? 'text-gray-700' : 'text-red-700'}`} title={selectedField.disease}>
+                      {selectedField.disease === 'None' ? 'None' : selectedField.disease}
                     </span>
                   </div>
                 </div>
